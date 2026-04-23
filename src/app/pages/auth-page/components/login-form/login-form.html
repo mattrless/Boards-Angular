@@ -1,0 +1,47 @@
+<form
+  id="login-form"
+  class="w-full"
+>
+  <div hlmFieldGroup class="gap-4">
+
+    <div hlmField data-invalid={fieldState.invalid}>
+      <label hlmFieldLabel>Email</label>
+      <input hlmInput
+        type="email"
+        placeholder="you@example.com"
+        autoComplete="email"
+      />
+    </div>
+
+
+
+
+    <div hlmField data-invalid={fieldState.invalid}>
+      <label hlmFieldLabel>Password</label>
+      <input hlmInput
+        type="password"
+        placeholder="Enter your password"
+        autoComplete="current-password"
+      />
+    </div>
+
+
+    <div class="flex flex-col gap-2">
+      <button hlmBtn
+        type="submit"
+        class="w-full"
+        form="login-form"
+      >
+        Login
+      </button>
+      <button hlmBtn
+        type="button"
+        class="w-full"
+        variant="outline"
+      >
+        Try Demo
+      </button>
+
+    </div>
+  </div>
+</form>

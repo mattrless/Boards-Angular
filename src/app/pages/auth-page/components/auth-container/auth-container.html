@@ -1,0 +1,21 @@
+<hlm-tabs tab="login" class="w-full">
+
+  <hlm-tabs-list class="grid w-full grid-cols-2">
+    <button hlmTabsTrigger="login">Sign in</button>
+    <button hlmTabsTrigger="register">Sign up</button>
+  </hlm-tabs-list>
+
+  <div hlmTabsContent="login"
+    class="origin-top data-[state=active]:animate-in data-[state=active]:fade-in-0 data-[state=active]:zoom-in-95 data-[state=active]:duration-200"
+  >
+    <login-form />
+  </div>
+
+  <div hlmTabsContent="register"
+    class="origin-top data-[state=active]:animate-in data-[state=active]:fade-in-0 data-[state=active]:zoom-in-95 data-[state=active]:duration-200"
+  >
+    <!-- <RegisterForm /> -->
+     <h1>reg</h1>
+  </div>
+
+</hlm-tabs>

@@ -13,8 +13,15 @@
     "target": "ES2022",
     "module": "preserve",
     "paths": {
-      "@spartan-ng/helm/button": ["./app/ui/button/src/index.ts"],
-      "@spartan-ng/helm/utils": ["./app/ui/utils/src/index.ts"]
+      "@spartan-ng/helm/button": ["./src/app/ui/button/src/index.ts"],
+      "@spartan-ng/helm/utils": ["./src/app/ui/utils/src/index.ts"],
+      "@spartan-ng/helm/card": ["./src/app/ui/card/src/index.ts"],
+      "@spartan-ng/helm/icon": ["./src/app/ui/icon/src/index.ts"],
+      "@spartan-ng/helm/tabs": ["./src/app/ui/tabs/src/index.ts"],
+      "@spartan-ng/helm/field": ["./src/app/ui/field/src/index.ts"],
+      "@spartan-ng/helm/label": ["./src/app/ui/label/src/index.ts"],
+      "@spartan-ng/helm/separator": ["./src/app/ui/separator/src/index.ts"],
+      "@spartan-ng/helm/input": ["./src/app/ui/input/src/index.ts"]
     }
   },
   "angularCompilerOptions": {
