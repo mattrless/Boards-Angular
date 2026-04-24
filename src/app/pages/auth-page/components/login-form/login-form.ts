@@ -5,6 +5,8 @@ import { HlmButtonImports } from '@spartan-ng/helm/button';
 import { HlmFieldImports } from "@spartan-ng/helm/field";
 import { HlmInputImports } from '@spartan-ng/helm/input';
 import { LoginResponseDto, LoginUserDto } from '../../../../api/generated/model';
+import { JwtTokenService } from '../../../../services/jwt-token.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'login-form',
@@ -14,6 +16,8 @@ import { LoginResponseDto, LoginUserDto } from '../../../../api/generated/model'
 export class LoginForm {
   private fb = inject(NonNullableFormBuilder);
   private authService = inject(AuthService);
+  private jwtTokenService = inject(JwtTokenService)
+  private router = inject(Router);
 
   readonly isSubmitting = signal(false);
   readonly serverError = signal('');
@@ -38,7 +42,14 @@ export class LoginForm {
 
     this.authService.login(loginFormValues).subscribe({
       next: (res: LoginResponseDto) => {
-        console.log(res)
+        const { access_token } = res;
+        if (!access_token) {
+          this.serverError.set('Invalid access token');
+          return;
+        }
+
+        this.jwtTokenService.setToken(access_token);
+        this.router.navigate(['/boards']);
       },
       complete: () => {
         this.isSubmitting.set(false);
