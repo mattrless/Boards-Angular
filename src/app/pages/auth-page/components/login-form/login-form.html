@@ -1,47 +1,75 @@
+@let emailFormControl = loginForm.controls.email;
+@let passwordFormControl = loginForm.controls.password;
+
 <form
   id="login-form"
+  [formGroup]="loginForm"
   class="w-full"
+  (ngSubmit)="onSubmit()"
 >
   <div hlmFieldGroup class="gap-4">
 
-    <div hlmField data-invalid={fieldState.invalid}>
+    <div hlmField>
       <label hlmFieldLabel>Email</label>
       <input hlmInput
         type="email"
+        formControlName="email"
         placeholder="you@example.com"
         autoComplete="email"
       />
+
+      @if (emailFormControl.touched && emailFormControl.hasError('required')) {
+        <hlm-field-error>
+          Email is required
+        </hlm-field-error>
+      }
+
+      @if (emailFormControl.touched && emailFormControl.hasError('email')) {
+        <hlm-field-error>
+          Invalid email
+        </hlm-field-error>
+      }
     </div>
 
-
-
-
-    <div hlmField data-invalid={fieldState.invalid}>
+    <div hlmField>
       <label hlmFieldLabel>Password</label>
       <input hlmInput
         type="password"
+        formControlName="password"
         placeholder="Enter your password"
         autoComplete="current-password"
       />
-    </div>
 
+      @if (passwordFormControl.touched && passwordFormControl.hasError('required')) {
+        <hlm-field-error>
+          Password is required
+        </hlm-field-error>
+      }
+
+      @if (passwordFormControl.touched && passwordFormControl.hasError('minlength')) {
+        <hlm-field-error>
+          Invalid password length
+        </hlm-field-error>
+      }
+    </div>
 
     <div class="flex flex-col gap-2">
       <button hlmBtn
         type="submit"
         class="w-full"
         form="login-form"
+        [disabled]="isSubmitting()"
       >
-        Login
+        {{ isSubmitting() ? 'Logging in...' : 'Login' }}
       </button>
-      <button hlmBtn
+      <!-- <button hlmBtn
         type="button"
         class="w-full"
         variant="outline"
       >
         Try Demo
-      </button>
-
+      </button> -->
     </div>
+
   </div>
 </form>
