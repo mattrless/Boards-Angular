@@ -13,6 +13,7 @@
     "target": "ES2022",
     "module": "preserve",
     "paths": {
+      "@env/*": ["./src/environments/*"],
       "@spartan-ng/helm/button": ["./src/app/ui/button/src/index.ts"],
       "@spartan-ng/helm/utils": ["./src/app/ui/utils/src/index.ts"],
       "@spartan-ng/helm/card": ["./src/app/ui/card/src/index.ts"],
