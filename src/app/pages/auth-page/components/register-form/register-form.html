@@ -1,0 +1,103 @@
+@let avatar = registerForm.controls.avatar;
+@let name = registerForm.controls.name;
+@let email = registerForm.controls.email;
+@let password = registerForm.controls.password;
+@let confirmPassword = registerForm.controls.confirmPassword;
+
+<form
+  id="register-form"
+  [formGroup]="registerForm"
+  class="w-full"
+  (ngSubmit)="onSubmit()"
+>
+  <div hlmFieldGroup class="gap-4">
+
+    <div hlmField>
+      <label hlmFieldLabel>Full name</label>
+      <input hlmInput
+        type="text"
+        placeholder="John Doe"
+        autoComplete="name"
+        formControlName="name"
+      />
+      @if (name.touched && name.hasError("required")) {
+        <hlm-field-error>Name is required</hlm-field-error>
+      }
+    </div>
+
+    <div hlmField>
+      <label hlmFieldLabel>Email</label>
+      <input hlmInput
+        type="email"
+        placeholder="john.doe@example.com"
+        autoComplete="email"
+        formControlName="email"
+      />
+      @if (email.touched && email.hasError("required")) {
+        <hlm-field-error>Email is required</hlm-field-error>
+      }
+      @if (email.touched && email.hasError("email")) {
+        <hlm-field-error>Invalid email</hlm-field-error>
+      }
+    </div>
+
+    <div hlmField>
+      <label hlmFieldLabel>Password</label>
+      <input hlmInput
+        type="password"
+        placeholder="strongPassword123"
+        autoComplete="new-password"
+        formControlName="password"
+      />
+      @if (password.touched && password.hasError("required")) {
+        <hlm-field-error>Password is required</hlm-field-error>
+      }
+      @if (password.touched && password.hasError("minlength")) {
+        <hlm-field-error>Invalid password length</hlm-field-error>
+      }
+    </div>
+
+    <div hlmField>
+      <label hlmFieldLabel>Confirm password</label>
+      <input hlmInput
+        type="password"
+        placeholder="Repeat your password"
+        autoComplete="new-password"
+        formControlName="confirmPassword"
+      />
+      @if (confirmPassword.touched && confirmPassword.hasError("required")) {
+        <hlm-field-error>Password is required</hlm-field-error>
+      }
+      @if (confirmPassword.touched && confirmPassword.hasError('fieldsMismatch')) {
+        <hlm-field-error>Passwords do not match</hlm-field-error>
+      }
+    </div>
+
+    <div hlmField>
+      <label hlmFieldLabel>Avatar URL (optional)</label>
+      <input hlmInput
+        type="url"
+        placeholder="https://example.com/avatar.jpg"
+        autoComplete="avatar-url"
+        formControlName="avatar"
+      />
+      @if (avatar.touched && avatar.hasError('invalidImageUrl') || avatar.hasError('invalidUrl')) {
+        <hlm-field-error>Avatar is not a valid image url</hlm-field-error>
+      }
+    </div>
+
+
+    <button hlmBtn
+      type="submit"
+      class="w-full"
+      form="register-form"
+      [disabled]="isSubmitting()"
+    >
+      {{ isSubmitting() ? 'Signing you in...' : 'Create account' }}
+    </button>
+
+    @if (serverError()) {
+      <hlm-field-error>{{ serverError() }}</hlm-field-error>
+    }
+  </div>
+</form>

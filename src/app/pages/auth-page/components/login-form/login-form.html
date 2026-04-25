@@ -71,5 +71,8 @@
       </button> -->
     </div>
 
+    @if (serverError()) {
+      <hlm-field-error>{{ serverError() }}</hlm-field-error>
+    }
   </div>
 </form>

@@ -7,6 +7,9 @@ import { HlmInputImports } from '@spartan-ng/helm/input';
 import { LoginResponseDto, LoginUserDto } from '../../../../api/generated/model';
 import { JwtTokenService } from '../../../../services/jwt-token.service';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { toast } from '@spartan-ng/brain/sonner';
 
 @Component({
   selector: 'login-form',
@@ -16,7 +19,7 @@ import { Router } from '@angular/router';
 export class LoginForm {
   private fb = inject(NonNullableFormBuilder);
   private authService = inject(AuthService);
-  private jwtTokenService = inject(JwtTokenService)
+  private jwtTokenService = inject(JwtTokenService);
   private router = inject(Router);
 
   readonly isSubmitting = signal(false);
@@ -40,7 +43,11 @@ export class LoginForm {
 
     const loginFormValues: LoginUserDto = this.loginForm.getRawValue();
 
-    this.authService.login(loginFormValues).subscribe({
+    this.authService.login(loginFormValues)
+    .pipe(
+      finalize(() => this.isSubmitting.set(false))
+    )
+    .subscribe({
       next: (res: LoginResponseDto) => {
         const { access_token } = res;
         if (!access_token) {
@@ -49,11 +56,18 @@ export class LoginForm {
         }
 
         this.jwtTokenService.setToken(access_token);
+        toast.success('Welcome back!!');
         this.router.navigate(['/boards']);
       },
-      complete: () => {
-        this.isSubmitting.set(false);
-      },
+      error: (e: HttpErrorResponse) => {
+        if (e.status === 401) {
+          this.serverError.set('Invalid credentials');
+          return;
+        }
+
+        this.serverError.set('Something went wrong, try again');
+      }
     });
+
   }
 }
