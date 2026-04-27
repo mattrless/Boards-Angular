@@ -7,12 +7,13 @@ import { UsersService } from '../../../../api/generated/users/users.service';
 import { imageUrlValidator } from '../../../../validators/image-url.validator';
 import { matchFields } from '../../../../validators/match-fields.validator';
 import { CreateUserDto, LoginResponseDto, LoginUserDto } from '../../../../api/generated/model';
-import { finalize } from 'rxjs';
+import { finalize, firstValueFrom } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../../../api/generated/auth/auth.service';
 import { JwtTokenService } from '../../../../services/jwt-token.service';
 import { Router } from '@angular/router';
 import { toast } from '@spartan-ng/brain/sonner';
+import { AuthSessionService } from '../../../../services/auth-session.service';
 
 @Component({
   selector: 'register-form',
@@ -25,6 +26,7 @@ export class RegisterForm {
   private authService = inject(AuthService);
   private jwtTokenService = inject(JwtTokenService);
   private router = inject(Router);
+  private authSessionService = inject(AuthSessionService);
 
   readonly isSubmitting = signal(false);
   readonly serverError = signal('');
@@ -61,11 +63,9 @@ export class RegisterForm {
     }
 
     this.usersService.create(registerUserData)
-      .pipe(
-        finalize(() => this.isSubmitting.set(false))
-      )
       .subscribe({
         next: () => {
+
           // login after register
           const loginValues: LoginUserDto = registerUserData;
           this.authService.login(loginValues)
@@ -73,7 +73,7 @@ export class RegisterForm {
               finalize(() => this.isSubmitting.set(false))
             )
             .subscribe({
-              next: (res: LoginResponseDto) => {
+              next: async (res: LoginResponseDto) => {
                 const { access_token } = res;
                 if (!access_token) {
                   this.serverError.set('Invalid access token');
@@ -81,16 +81,23 @@ export class RegisterForm {
                 }
 
                 this.jwtTokenService.setToken(access_token);
-                toast.success('Welcome!!');
-                this.router.navigate(['/boards']);
+
+                try {
+                  await firstValueFrom(this.authSessionService.loadSession());
+                  toast.success('Welcome!!');
+                  await this.router.navigate(['/boards']);
+                } catch {
+                  this.jwtTokenService.clearToken();
+                  this.authSessionService.clearSession();
+                  this.serverError.set("Something went wrong loading your session, try again");
+                }
               },
               error: (e: HttpErrorResponse) => {
                 if (e.status === 401) {
                   this.serverError.set('Invalid credentials');
-                  return;
+                } else {
+                  this.serverError.set('Something went wrong during auto-login after register. Please login manually');
                 }
-
-                this.serverError.set('Something went wrong during auto-login after register. Please login manually');
               }
             });
 
@@ -98,9 +105,11 @@ export class RegisterForm {
         error: (e: HttpErrorResponse) => {
           if(e.status === 400) {
             this.serverError.set("Invalid data");
+          } else {
+            this.serverError.set("Something went wrong, try again");
           }
 
-          this.serverError.set("Something went wrong, try again");
+          this.isSubmitting.set(false);
         }
       });
   }
