@@ -12,5 +12,5 @@ export const roleGuard: CanActivateFn = (route, state) => {
 
   const allowed = requiredRoles.some((role) => authSession.hasRole(role));
 
-  return allowed ? true : router.createUrlTree(['/boards']);
+  return allowed ? true : router.createUrlTree(['/forbidden']);
 };

@@ -37,6 +37,9 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
         toast.error("Unauthorized");
         void router.navigate(['/'], { queryParams: { returnUrl: router.url } });
+      } else if (error.status === 403 && !isPublicRoute) {
+        toast.error('Forbidden');
+        void router.navigate(['/forbidden']);
       }
       // return error in public routes, such as login, to handle it
       return throwError(() => error);

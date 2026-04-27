@@ -16,6 +16,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/boards-page/boards-page'),
   },
   {
+    path: 'forbidden',
+    loadComponent: () => import('./pages/forbidden-page/forbidden-page'),
+  },
+  {
     path: "**",
     redirectTo: ''
   }
