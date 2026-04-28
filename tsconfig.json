@@ -23,7 +23,8 @@
       "@spartan-ng/helm/label": ["./src/app/ui/label/src/index.ts"],
       "@spartan-ng/helm/separator": ["./src/app/ui/separator/src/index.ts"],
       "@spartan-ng/helm/input": ["./src/app/ui/input/src/index.ts"],
-      "@spartan-ng/helm/sonner": ["./src/app/ui/sonner/src/index.ts"]
+      "@spartan-ng/helm/sonner": ["./src/app/ui/sonner/src/index.ts"],
+      "@spartan-ng/helm/breadcrumb": ["./src/app/ui/breadcrumb/src/index.ts"]
     }
   },
   "angularCompilerOptions": {
