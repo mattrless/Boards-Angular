@@ -82,16 +82,16 @@ export class BoardMembersService {
 /**
  * @summary Update a board member role
  */
- updateBoardRole<TData = void>(boardId: number,
+ updateBoardMemberRole<TData = void>(boardId: number,
     targetUserId: number,
     updateBoardRoleDto: UpdateBoardRoleDto, options?: HttpClientBodyOptions): Observable<TData>;
- updateBoardRole<TData = void>(boardId: number,
+ updateBoardMemberRole<TData = void>(boardId: number,
     targetUserId: number,
     updateBoardRoleDto: UpdateBoardRoleDto, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- updateBoardRole<TData = void>(boardId: number,
+ updateBoardMemberRole<TData = void>(boardId: number,
     targetUserId: number,
     updateBoardRoleDto: UpdateBoardRoleDto, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  updateBoardRole<TData = void>(
+  updateBoardMemberRole<TData = void>(
     boardId: number,
     targetUserId: number,
     updateBoardRoleDto: UpdateBoardRoleDto, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
@@ -126,13 +126,13 @@ export class BoardMembersService {
 /**
  * @summary Add a member to a board
  */
- addMember1<TData = void>(boardId: number,
+ addBoardMember<TData = void>(boardId: number,
     addBoardMemberDto: AddBoardMemberDto, options?: HttpClientBodyOptions): Observable<TData>;
- addMember1<TData = void>(boardId: number,
+ addBoardMember<TData = void>(boardId: number,
     addBoardMemberDto: AddBoardMemberDto, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- addMember1<TData = void>(boardId: number,
+ addBoardMember<TData = void>(boardId: number,
     addBoardMemberDto: AddBoardMemberDto, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  addMember1<TData = void>(
+  addBoardMember<TData = void>(
     boardId: number,
     addBoardMemberDto: AddBoardMemberDto, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
     if (options?.observe === 'events') {
@@ -199,13 +199,13 @@ export class BoardMembersService {
 /**
  * @summary Remove a member from a board
  */
- removeMember<TData = void>(boardId: number,
+ removeBoardMember<TData = void>(boardId: number,
     targetUserId: number, options?: HttpClientBodyOptions): Observable<TData>;
- removeMember<TData = void>(boardId: number,
+ removeBoardMember<TData = void>(boardId: number,
     targetUserId: number, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- removeMember<TData = void>(boardId: number,
+ removeBoardMember<TData = void>(boardId: number,
     targetUserId: number, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  removeMember<TData = void>(
+  removeBoardMember<TData = void>(
     boardId: number,
     targetUserId: number, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
     if (options?.observe === 'events') {

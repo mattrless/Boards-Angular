@@ -83,10 +83,10 @@ export class BoardsService {
 /**
  * @summary Get a specific board by ID
  */
- findOne<TData = BoardResponseDto>(boardId: number, options?: HttpClientBodyOptions): Observable<TData>;
- findOne<TData = BoardResponseDto>(boardId: number, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- findOne<TData = BoardResponseDto>(boardId: number, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  findOne<TData = BoardResponseDto>(
+ findBoardById<TData = BoardResponseDto>(boardId: number, options?: HttpClientBodyOptions): Observable<TData>;
+ findBoardById<TData = BoardResponseDto>(boardId: number, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
+ findBoardById<TData = BoardResponseDto>(boardId: number, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
+  findBoardById<TData = BoardResponseDto>(
     boardId: number, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
     if (options?.observe === 'events') {
       return this.http.get<TData>(
@@ -116,13 +116,13 @@ export class BoardsService {
 /**
  * @summary Update a board
  */
- update1<TData = BoardResponseDto>(boardId: number,
+ updateBoard<TData = BoardResponseDto>(boardId: number,
     updateBoardDto: UpdateBoardDto, options?: HttpClientBodyOptions): Observable<TData>;
- update1<TData = BoardResponseDto>(boardId: number,
+ updateBoard<TData = BoardResponseDto>(boardId: number,
     updateBoardDto: UpdateBoardDto, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- update1<TData = BoardResponseDto>(boardId: number,
+ updateBoard<TData = BoardResponseDto>(boardId: number,
     updateBoardDto: UpdateBoardDto, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  update1<TData = BoardResponseDto>(
+  updateBoard<TData = BoardResponseDto>(
     boardId: number,
     updateBoardDto: UpdateBoardDto, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
     if (options?.observe === 'events') {
@@ -156,10 +156,10 @@ export class BoardsService {
 /**
  * @summary Delete a board
  */
- remove<TData = void>(boardId: number, options?: HttpClientBodyOptions): Observable<TData>;
- remove<TData = void>(boardId: number, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- remove<TData = void>(boardId: number, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  remove<TData = void>(
+ removeBoard<TData = void>(boardId: number, options?: HttpClientBodyOptions): Observable<TData>;
+ removeBoard<TData = void>(boardId: number, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
+ removeBoard<TData = void>(boardId: number, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
+  removeBoard<TData = void>(
     boardId: number, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
     if (options?.observe === 'events') {
       return this.http.delete<TData>(
@@ -189,13 +189,13 @@ export class BoardsService {
 /**
  * @summary Transfer board ownership to another member
  */
- transferOwnership<TData = void>(boardId: number,
+ transferBoardOwnership<TData = void>(boardId: number,
     targetUserId: number, options?: HttpClientBodyOptions): Observable<TData>;
- transferOwnership<TData = void>(boardId: number,
+ transferBoardOwnership<TData = void>(boardId: number,
     targetUserId: number, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- transferOwnership<TData = void>(boardId: number,
+ transferBoardOwnership<TData = void>(boardId: number,
     targetUserId: number, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  transferOwnership<TData = void>(
+  transferBoardOwnership<TData = void>(
     boardId: number,
     targetUserId: number, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
     if (options?.observe === 'events') {
@@ -226,10 +226,10 @@ export class BoardsService {
 /**
  * @summary Create a new board
  */
- create1<TData = BoardResponseDto>(createBoardDto: CreateBoardDto, options?: HttpClientBodyOptions): Observable<TData>;
- create1<TData = BoardResponseDto>(createBoardDto: CreateBoardDto, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- create1<TData = BoardResponseDto>(createBoardDto: CreateBoardDto, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  create1<TData = BoardResponseDto>(
+ createBoard<TData = BoardResponseDto>(createBoardDto: CreateBoardDto, options?: HttpClientBodyOptions): Observable<TData>;
+ createBoard<TData = BoardResponseDto>(createBoardDto: CreateBoardDto, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
+ createBoard<TData = BoardResponseDto>(createBoardDto: CreateBoardDto, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
+  createBoard<TData = BoardResponseDto>(
     createBoardDto: CreateBoardDto, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
     if (options?.observe === 'events') {
       return this.http.post<TData>(

@@ -116,10 +116,10 @@ export class UsersService {
 /**
  * @summary Update the authenticated user profile
  */
- update<TData = UserResponseDto>(updateUserDto: UpdateUserDto, options?: HttpClientBodyOptions): Observable<TData>;
- update<TData = UserResponseDto>(updateUserDto: UpdateUserDto, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- update<TData = UserResponseDto>(updateUserDto: UpdateUserDto, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  update<TData = UserResponseDto>(
+ updateMe<TData = UserResponseDto>(updateUserDto: UpdateUserDto, options?: HttpClientBodyOptions): Observable<TData>;
+ updateMe<TData = UserResponseDto>(updateUserDto: UpdateUserDto, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
+ updateMe<TData = UserResponseDto>(updateUserDto: UpdateUserDto, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
+  updateMe<TData = UserResponseDto>(
     updateUserDto: UpdateUserDto, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
     if (options?.observe === 'events') {
       return this.http.put<TData>(
@@ -185,10 +185,10 @@ export class UsersService {
 /**
  * @summary Retrieve all users
  */
- findAll<TData = UserResponseDto[]>( options?: HttpClientBodyOptions): Observable<TData>;
- findAll<TData = UserResponseDto[]>( options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- findAll<TData = UserResponseDto[]>( options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  findAll<TData = UserResponseDto[]>(
+ findAllUsers<TData = UserResponseDto[]>( options?: HttpClientBodyOptions): Observable<TData>;
+ findAllUsers<TData = UserResponseDto[]>( options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
+ findAllUsers<TData = UserResponseDto[]>( options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
+  findAllUsers<TData = UserResponseDto[]>(
      options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
     if (options?.observe === 'events') {
       return this.http.get<TData>(
@@ -218,10 +218,10 @@ export class UsersService {
 /**
  * @summary Create a new user
  */
- create<TData = UserResponseDto>(createUserDto: CreateUserDto, options?: HttpClientBodyOptions): Observable<TData>;
- create<TData = UserResponseDto>(createUserDto: CreateUserDto, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- create<TData = UserResponseDto>(createUserDto: CreateUserDto, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  create<TData = UserResponseDto>(
+ createUser<TData = UserResponseDto>(createUserDto: CreateUserDto, options?: HttpClientBodyOptions): Observable<TData>;
+ createUser<TData = UserResponseDto>(createUserDto: CreateUserDto, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
+ createUser<TData = UserResponseDto>(createUserDto: CreateUserDto, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
+  createUser<TData = UserResponseDto>(
     createUserDto: CreateUserDto, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
     if (options?.observe === 'events') {
       return this.http.post<TData>(
@@ -254,10 +254,10 @@ export class UsersService {
 /**
  * @summary Get a specific user by ID
  */
- findById<TData = UserResponseDto>(id: number, options?: HttpClientBodyOptions): Observable<TData>;
- findById<TData = UserResponseDto>(id: number, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- findById<TData = UserResponseDto>(id: number, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  findById<TData = UserResponseDto>(
+ findUserById<TData = UserResponseDto>(id: number, options?: HttpClientBodyOptions): Observable<TData>;
+ findUserById<TData = UserResponseDto>(id: number, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
+ findUserById<TData = UserResponseDto>(id: number, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
+  findUserById<TData = UserResponseDto>(
     id: number, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
     if (options?.observe === 'events') {
       return this.http.get<TData>(
@@ -287,8 +287,8 @@ export class UsersService {
 };
 
 export type FindMeClientResult = NonNullable<MeResponseDto>
-export type UpdateClientResult = NonNullable<UserResponseDto>
+export type UpdateMeClientResult = NonNullable<UserResponseDto>
 export type RemoveMeClientResult = NonNullable<void>
-export type FindAllClientResult = NonNullable<UserResponseDto[]>
-export type CreateClientResult = NonNullable<UserResponseDto>
-export type FindByIdClientResult = NonNullable<UserResponseDto>
+export type FindAllUsersClientResult = NonNullable<UserResponseDto[]>
+export type CreateUserClientResult = NonNullable<UserResponseDto>
+export type FindUserByIdClientResult = NonNullable<UserResponseDto>

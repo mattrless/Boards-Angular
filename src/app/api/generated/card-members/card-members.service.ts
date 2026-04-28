@@ -82,13 +82,13 @@ export class CardMembersService {
  * Returns a list of users assigned to the specified card.
  * @summary Get all users assigned to a card
  */
- findAll3<TData = UserResponseDto[]>(boardId: number,
+ findCardAssignments<TData = UserResponseDto[]>(boardId: number,
     cardId: number, options?: HttpClientBodyOptions): Observable<TData>;
- findAll3<TData = UserResponseDto[]>(boardId: number,
+ findCardAssignments<TData = UserResponseDto[]>(boardId: number,
     cardId: number, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- findAll3<TData = UserResponseDto[]>(boardId: number,
+ findCardAssignments<TData = UserResponseDto[]>(boardId: number,
     cardId: number, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  findAll3<TData = UserResponseDto[]>(
+  findCardAssignments<TData = UserResponseDto[]>(
     boardId: number,
     cardId: number, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
     if (options?.observe === 'events') {
@@ -120,16 +120,16 @@ export class CardMembersService {
  * Allows assigning a board member to a card. Members can only assign themselves.
  * @summary Assign a user to a card
  */
- addMember<TData = void>(boardId: number,
+ createCardAssignment<TData = void>(boardId: number,
     cardId: number,
     createCardAssignmentDto: CreateCardAssignmentDto, options?: HttpClientBodyOptions): Observable<TData>;
- addMember<TData = void>(boardId: number,
+ createCardAssignment<TData = void>(boardId: number,
     cardId: number,
     createCardAssignmentDto: CreateCardAssignmentDto, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- addMember<TData = void>(boardId: number,
+ createCardAssignment<TData = void>(boardId: number,
     cardId: number,
     createCardAssignmentDto: CreateCardAssignmentDto, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  addMember<TData = void>(
+  createCardAssignment<TData = void>(
     boardId: number,
     cardId: number,
     createCardAssignmentDto: CreateCardAssignmentDto, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
@@ -165,16 +165,16 @@ export class CardMembersService {
  * Removes a user assignment from a card. Members can only remove themselves.
  * @summary Remove a user from a card
  */
- deleteMember<TData = void>(boardId: number,
+ deleteCardAssignment<TData = void>(boardId: number,
     cardId: number,
     targetMemberId: number, options?: HttpClientBodyOptions): Observable<TData>;
- deleteMember<TData = void>(boardId: number,
+ deleteCardAssignment<TData = void>(boardId: number,
     cardId: number,
     targetMemberId: number, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- deleteMember<TData = void>(boardId: number,
+ deleteCardAssignment<TData = void>(boardId: number,
     cardId: number,
     targetMemberId: number, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  deleteMember<TData = void>(
+  deleteCardAssignment<TData = void>(
     boardId: number,
     cardId: number,
     targetMemberId: number, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {

@@ -83,13 +83,13 @@ export class BoardListsService {
 /**
  * @summary Get a specific board list by ID
  */
- findOne1<TData = BoardListResponseDto>(boardId: number,
+ findBoardListById<TData = BoardListResponseDto>(boardId: number,
     boardListId: number, options?: HttpClientBodyOptions): Observable<TData>;
- findOne1<TData = BoardListResponseDto>(boardId: number,
+ findBoardListById<TData = BoardListResponseDto>(boardId: number,
     boardListId: number, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- findOne1<TData = BoardListResponseDto>(boardId: number,
+ findBoardListById<TData = BoardListResponseDto>(boardId: number,
     boardListId: number, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  findOne1<TData = BoardListResponseDto>(
+  findBoardListById<TData = BoardListResponseDto>(
     boardId: number,
     boardListId: number, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
     if (options?.observe === 'events') {
@@ -120,16 +120,16 @@ export class BoardListsService {
 /**
  * @summary Update a board list
  */
- update2<TData = BoardListResponseDto>(boardId: number,
+ updateBoardList<TData = BoardListResponseDto>(boardId: number,
     boardListId: number,
     updateBoardListDto: UpdateBoardListDto, options?: HttpClientBodyOptions): Observable<TData>;
- update2<TData = BoardListResponseDto>(boardId: number,
+ updateBoardList<TData = BoardListResponseDto>(boardId: number,
     boardListId: number,
     updateBoardListDto: UpdateBoardListDto, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- update2<TData = BoardListResponseDto>(boardId: number,
+ updateBoardList<TData = BoardListResponseDto>(boardId: number,
     boardListId: number,
     updateBoardListDto: UpdateBoardListDto, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  update2<TData = BoardListResponseDto>(
+  updateBoardList<TData = BoardListResponseDto>(
     boardId: number,
     boardListId: number,
     updateBoardListDto: UpdateBoardListDto, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
@@ -164,13 +164,13 @@ export class BoardListsService {
 /**
  * @summary Delete a board list
  */
- _delete<TData = void>(boardId: number,
+ removeBoardList<TData = void>(boardId: number,
     boardListId: number, options?: HttpClientBodyOptions): Observable<TData>;
- _delete<TData = void>(boardId: number,
+ removeBoardList<TData = void>(boardId: number,
     boardListId: number, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- _delete<TData = void>(boardId: number,
+ removeBoardList<TData = void>(boardId: number,
     boardListId: number, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  _delete<TData = void>(
+  removeBoardList<TData = void>(
     boardId: number,
     boardListId: number, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
     if (options?.observe === 'events') {
@@ -216,16 +216,16 @@ Notes:
 
  * @summary Update a board list position
  */
- updatePosition<TData = BoardListResponseDto>(boardId: number,
+ updateBoardListPosition<TData = BoardListResponseDto>(boardId: number,
     boardListId: number,
     updateBoardListPositionDto: UpdateBoardListPositionDto, options?: HttpClientBodyOptions): Observable<TData>;
- updatePosition<TData = BoardListResponseDto>(boardId: number,
+ updateBoardListPosition<TData = BoardListResponseDto>(boardId: number,
     boardListId: number,
     updateBoardListPositionDto: UpdateBoardListPositionDto, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- updatePosition<TData = BoardListResponseDto>(boardId: number,
+ updateBoardListPosition<TData = BoardListResponseDto>(boardId: number,
     boardListId: number,
     updateBoardListPositionDto: UpdateBoardListPositionDto, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  updatePosition<TData = BoardListResponseDto>(
+  updateBoardListPosition<TData = BoardListResponseDto>(
     boardId: number,
     boardListId: number,
     updateBoardListPositionDto: UpdateBoardListPositionDto, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
@@ -260,10 +260,10 @@ Notes:
 /**
  * @summary Get all lists for a board
  */
- findAll1<TData = BoardListResponseDto[]>(boardId: number, options?: HttpClientBodyOptions): Observable<TData>;
- findAll1<TData = BoardListResponseDto[]>(boardId: number, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- findAll1<TData = BoardListResponseDto[]>(boardId: number, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  findAll1<TData = BoardListResponseDto[]>(
+ findAllBoardLists<TData = BoardListResponseDto[]>(boardId: number, options?: HttpClientBodyOptions): Observable<TData>;
+ findAllBoardLists<TData = BoardListResponseDto[]>(boardId: number, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
+ findAllBoardLists<TData = BoardListResponseDto[]>(boardId: number, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
+  findAllBoardLists<TData = BoardListResponseDto[]>(
     boardId: number, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
     if (options?.observe === 'events') {
       return this.http.get<TData>(
@@ -293,13 +293,13 @@ Notes:
 /**
  * @summary Create a new list in a board
  */
- create2<TData = BoardListResponseDto>(boardId: number,
+ createBoardList<TData = BoardListResponseDto>(boardId: number,
     createBoardListDto: CreateBoardListDto, options?: HttpClientBodyOptions): Observable<TData>;
- create2<TData = BoardListResponseDto>(boardId: number,
+ createBoardList<TData = BoardListResponseDto>(boardId: number,
     createBoardListDto: CreateBoardListDto, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- create2<TData = BoardListResponseDto>(boardId: number,
+ createBoardList<TData = BoardListResponseDto>(boardId: number,
     createBoardListDto: CreateBoardListDto, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  create2<TData = BoardListResponseDto>(
+  createBoardList<TData = BoardListResponseDto>(
     boardId: number,
     createBoardListDto: CreateBoardListDto, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
     if (options?.observe === 'events') {

@@ -118,10 +118,10 @@ export class AiService {
 /**
  * @summary Check description grammar
  */
- checkGrammar<TData = DescriptionResponseDto>(checkGrammarDto: CheckGrammarDto, options?: HttpClientBodyOptions): Observable<TData>;
- checkGrammar<TData = DescriptionResponseDto>(checkGrammarDto: CheckGrammarDto, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- checkGrammar<TData = DescriptionResponseDto>(checkGrammarDto: CheckGrammarDto, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  checkGrammar<TData = DescriptionResponseDto>(
+ checkDescriptionGrammar<TData = DescriptionResponseDto>(checkGrammarDto: CheckGrammarDto, options?: HttpClientBodyOptions): Observable<TData>;
+ checkDescriptionGrammar<TData = DescriptionResponseDto>(checkGrammarDto: CheckGrammarDto, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
+ checkDescriptionGrammar<TData = DescriptionResponseDto>(checkGrammarDto: CheckGrammarDto, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
+  checkDescriptionGrammar<TData = DescriptionResponseDto>(
     checkGrammarDto: CheckGrammarDto, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
     if (options?.observe === 'events') {
       return this.http.post<TData>(

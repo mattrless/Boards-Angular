@@ -84,16 +84,16 @@ export class CardsService {
 /**
  * @summary Get a specific card by ID
  */
- findOne2<TData = CardResponseDto>(boardId: number,
+ findCardById<TData = CardResponseDto>(boardId: number,
     boardListId: number,
     cardId: number, options?: HttpClientBodyOptions): Observable<TData>;
- findOne2<TData = CardResponseDto>(boardId: number,
+ findCardById<TData = CardResponseDto>(boardId: number,
     boardListId: number,
     cardId: number, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- findOne2<TData = CardResponseDto>(boardId: number,
+ findCardById<TData = CardResponseDto>(boardId: number,
     boardListId: number,
     cardId: number, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  findOne2<TData = CardResponseDto>(
+  findCardById<TData = CardResponseDto>(
     boardId: number,
     boardListId: number,
     cardId: number, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
@@ -125,19 +125,19 @@ export class CardsService {
 /**
  * @summary Update a card
  */
- update3<TData = CardResponseDto>(boardId: number,
+ updateCard<TData = CardResponseDto>(boardId: number,
     boardListId: number,
     cardId: number,
     updateCardDto: UpdateCardDto, options?: HttpClientBodyOptions): Observable<TData>;
- update3<TData = CardResponseDto>(boardId: number,
+ updateCard<TData = CardResponseDto>(boardId: number,
     boardListId: number,
     cardId: number,
     updateCardDto: UpdateCardDto, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- update3<TData = CardResponseDto>(boardId: number,
+ updateCard<TData = CardResponseDto>(boardId: number,
     boardListId: number,
     cardId: number,
     updateCardDto: UpdateCardDto, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  update3<TData = CardResponseDto>(
+  updateCard<TData = CardResponseDto>(
     boardId: number,
     boardListId: number,
     cardId: number,
@@ -173,16 +173,16 @@ export class CardsService {
 /**
  * @summary Delete a card
  */
- delete1<TData = void>(boardId: number,
+ removeCard<TData = void>(boardId: number,
     boardListId: number,
     cardId: number, options?: HttpClientBodyOptions): Observable<TData>;
- delete1<TData = void>(boardId: number,
+ removeCard<TData = void>(boardId: number,
     boardListId: number,
     cardId: number, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- delete1<TData = void>(boardId: number,
+ removeCard<TData = void>(boardId: number,
     boardListId: number,
     cardId: number, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  delete1<TData = void>(
+  removeCard<TData = void>(
     boardId: number,
     boardListId: number,
     cardId: number, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
@@ -239,16 +239,16 @@ Notes:
 
  * @summary Update a card position
  */
- updatePosition1<TData = CardPositionUpdatedResponseDto>(boardId: number,
+ updateCardPosition<TData = CardPositionUpdatedResponseDto>(boardId: number,
     cardId: number,
     updateCardPositionDto: UpdateCardPositionDto, options?: HttpClientBodyOptions): Observable<TData>;
- updatePosition1<TData = CardPositionUpdatedResponseDto>(boardId: number,
+ updateCardPosition<TData = CardPositionUpdatedResponseDto>(boardId: number,
     cardId: number,
     updateCardPositionDto: UpdateCardPositionDto, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- updatePosition1<TData = CardPositionUpdatedResponseDto>(boardId: number,
+ updateCardPosition<TData = CardPositionUpdatedResponseDto>(boardId: number,
     cardId: number,
     updateCardPositionDto: UpdateCardPositionDto, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  updatePosition1<TData = CardPositionUpdatedResponseDto>(
+  updateCardPosition<TData = CardPositionUpdatedResponseDto>(
     boardId: number,
     cardId: number,
     updateCardPositionDto: UpdateCardPositionDto, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
@@ -283,13 +283,13 @@ Notes:
 /**
  * @summary Get all cards in a list
  */
- findAll2<TData = CardResponseDto[]>(boardId: number,
+ findAllCards<TData = CardResponseDto[]>(boardId: number,
     boardListId: number, options?: HttpClientBodyOptions): Observable<TData>;
- findAll2<TData = CardResponseDto[]>(boardId: number,
+ findAllCards<TData = CardResponseDto[]>(boardId: number,
     boardListId: number, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- findAll2<TData = CardResponseDto[]>(boardId: number,
+ findAllCards<TData = CardResponseDto[]>(boardId: number,
     boardListId: number, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  findAll2<TData = CardResponseDto[]>(
+  findAllCards<TData = CardResponseDto[]>(
     boardId: number,
     boardListId: number, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
     if (options?.observe === 'events') {
@@ -320,16 +320,16 @@ Notes:
 /**
  * @summary Create a new card in a list
  */
- create3<TData = CardResponseDto>(boardId: number,
+ createCard<TData = CardResponseDto>(boardId: number,
     boardListId: number,
     createCardDto: CreateCardDto, options?: HttpClientBodyOptions): Observable<TData>;
- create3<TData = CardResponseDto>(boardId: number,
+ createCard<TData = CardResponseDto>(boardId: number,
     boardListId: number,
     createCardDto: CreateCardDto, options?: HttpClientEventOptions): Observable<HttpEvent<TData>>;
- create3<TData = CardResponseDto>(boardId: number,
+ createCard<TData = CardResponseDto>(boardId: number,
     boardListId: number,
     createCardDto: CreateCardDto, options?: HttpClientResponseOptions): Observable<AngularHttpResponse<TData>>;
-  create3<TData = CardResponseDto>(
+  createCard<TData = CardResponseDto>(
     boardId: number,
     boardListId: number,
     createCardDto: CreateCardDto, options?: HttpClientObserveOptions): Observable<TData | HttpEvent<TData> | AngularHttpResponse<TData>> {
