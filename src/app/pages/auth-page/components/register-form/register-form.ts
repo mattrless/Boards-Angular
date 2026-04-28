@@ -62,7 +62,7 @@ export class RegisterForm {
       }
     }
 
-    this.usersService.create(registerUserData)
+    this.usersService.createUser(registerUserData)
       .subscribe({
         next: () => {
 
