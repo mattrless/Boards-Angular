@@ -1,4 +1,4 @@
-import { Component, output, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { HlmButtonImports } from '@spartan-ng/helm/button';
 import { HlmIcon } from '@spartan-ng/helm/icon';
@@ -14,8 +14,6 @@ import { CreateBoardForm } from "../create-board-form/create-board-form";
 })
 export class CreateBoardButton {
   readonly isShowingForm = signal<boolean>(false);
-
-  readonly boardCreated = output<void>();
 
   closeCreateBoardForm(): void {
     this.isShowingForm.set(false);

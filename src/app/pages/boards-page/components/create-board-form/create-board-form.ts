@@ -8,6 +8,7 @@ import { toast } from '@spartan-ng/brain/sonner';
 import { HlmFieldImports } from '@spartan-ng/helm/field';
 import { HlmButtonImports } from '@spartan-ng/helm/button';
 import { HlmInputImports } from '@spartan-ng/helm/input';
+import { BoardsStateService } from '../../../../services/boards-state.service';
 
 @Component({
   selector: 'create-board-form',
@@ -17,9 +18,9 @@ import { HlmInputImports } from '@spartan-ng/helm/input';
 export class CreateBoardForm {
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly boardsService = inject(BoardsService);
+  private readonly boardsStateService = inject(BoardsStateService);
 
   readonly closeBoardForm = output<void>();
-  readonly boardCreated = output<void>();
 
   readonly isSubmitting = signal(false);
   readonly serverError = signal('');
@@ -49,8 +50,8 @@ export class CreateBoardForm {
     .subscribe({
       next: () => {
         toast.success("Board created");
+        this.boardsStateService.reload();
         this.closeBoardForm.emit();
-        this.boardCreated.emit();
       },
       error: (e: HttpErrorResponse) => {
         if (e.status === 400) {

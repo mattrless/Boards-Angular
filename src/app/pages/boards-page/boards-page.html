@@ -8,7 +8,7 @@
   </hlm-tabs>
 
   <div class="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 xl:grid-cols-3">
-    <create-board-button (boardCreated)="reloadBoards()" />
+    <create-board-button />
     @for (b of boards.value(); track b.id) {
       <board-item [board]="b"/>
     }

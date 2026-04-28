@@ -2,7 +2,7 @@
   <div hlmCardContent class="flex min-h-40 items-center justify-center py-4">
     @if (isShowingForm()) {
       <div class="w-full max-w-md">
-        <create-board-form (closeBoardForm)="closeCreateBoardForm()" (boardCreated)="boardCreated.emit()"/>
+        <create-board-form (closeBoardForm)="closeCreateBoardForm()" />
       </div>
     } @else {
       <button hlmBtn
