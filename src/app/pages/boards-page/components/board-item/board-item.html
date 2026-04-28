@@ -1,0 +1,31 @@
+<section hlmCard>
+  @if (isEditingBoard()) {
+    <div hlmCardContent class="flex min-h-40 items-center justify-center py-4">
+      <div class="flex w-full max-w-sm flex-col gap-3">
+        <edit-board-form [board]="board()" />
+      </div>
+    </div>
+  } @else {
+    <div hlmCardHeader class="gap-3">
+      <div class="flex items-start justify-between gap-3">
+        <h3 hlmCardTitle class="line-clamp-1 text-lg" [title]="board().name">
+          {{board().name}}
+        </h3>
+        <div class="flex items-center gap-1">
+          @if (canDeleteBoard() || canUpdateBoard()) {
+            <board-actions [canDelete]="canDeleteBoard()" [canUpdate]="canUpdateBoard()" />
+          }
+          <span class="rounded-full bg-primary/10 px-2 py-1 text-xs font-medium text-primary">
+            {{board().ownedByCurrentUser ? "Owned" : "Shared"}}
+          </span>
+        </div>
+      </div>
+      <p hlmCardDescription>Updated {{board().updatedAt | date: 'short'}}</p>
+    </div>
+    <div hlmCardContent class="mt-auto space-y-3 pt-0">
+      <div class="flex items-center justify-end">
+        <a hlmBtn size="sm" [routerLink]="['/boards', board().id]">Open</a>
+      </div>
+    </div>
+  }
+</section>

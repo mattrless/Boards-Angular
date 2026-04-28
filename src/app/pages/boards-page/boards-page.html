@@ -1,1 +1,16 @@
-<p>boards-page works!</p>
+<div class="space-y-4">
+  <hlm-tabs tab="all">
+    <hlm-tabs-list>
+      <button hlmTabsTrigger="all">All</button>
+      <button hlmTabsTrigger="owned">Owned</button>
+      <button hlmTabsTrigger="shared">Shared</button>
+    </hlm-tabs-list>
+  </hlm-tabs>
+
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+    <!-- <CreateBoardCard /> -->
+    @for (b of boards.value(); track b.id) {
+      <board-item [board]="b"/>
+    }
+  </div>
+</div>

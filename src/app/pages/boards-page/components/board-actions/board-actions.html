@@ -1,0 +1,23 @@
+<button hlmBtn variant="ghost" [hlmDropdownMenuTrigger]="menu">
+  <ng-icon hlm name="lucideEllipsis" size="sm"/>
+</button>
+<ng-template #menu>
+  <hlm-dropdown-menu>
+
+    <hlm-dropdown-menu-group>
+      @if (canUpdate()) {
+        <button hlmDropdownMenuItem class="gap-2">
+          <ng-icon hlm name="lucidePencil" size="sm" />
+          <span>Edit</span>
+        </button>
+      }
+      @if (canDelete()) {
+        <button hlmDropdownMenuItem class="gap-2" variant="destructive">
+          <ng-icon hlm name="lucideTrash" size="sm" />
+          <span>Delete</span>
+        </button>
+      }
+    </hlm-dropdown-menu-group>
+
+  </hlm-dropdown-menu>
+</ng-template>
