@@ -1,0 +1,18 @@
+<div hlmCard class="border-dashed py-0">
+  <div hlmCardContent class="flex min-h-40 items-center justify-center py-4">
+    @if (isShowingForm()) {
+      <div class="w-full max-w-md">
+        <create-board-form (closeBoardForm)="closeCreateBoardForm()" (boardCreated)="boardCreated.emit()"/>
+      </div>
+    } @else {
+      <button hlmBtn
+        variant="ghost"
+        class="gap-2"
+        (click)="showCreateBoardForm()"
+      >
+        <ng-icon hlm name="lucidePlus" size="sm" />
+        New board
+      </button>
+    }
+  </div>
+</div>

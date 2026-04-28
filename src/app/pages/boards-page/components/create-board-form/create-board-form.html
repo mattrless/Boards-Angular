@@ -1,0 +1,32 @@
+<form [formGroup]="boardForm" (ngSubmit)="onSubmit()" class="w-full">
+  <div hlmFieldGroup class="gap-4">
+
+    <div hlmField>
+      <label hlmFieldLabel>Name</label>
+      <input hlmInput
+        placeholder="My awesome board"
+        autoComplete="name"
+        type="text"
+        formControlName="name"
+        class="w-full"
+      />
+      @if (boardForm.controls.name.touched && boardForm.controls.name.hasError("required")) {
+        <hlm-field-error>Name is required</hlm-field-error>
+      }
+    </div>
+
+    @if (serverError()) {
+      <hlm-field-error>{{ serverError() }}</hlm-field-error>
+    }
+
+    <div class="flex w-full gap-2">
+      <button hlmBtn type="button" variant="outline" class="flex-1" (click)="closeBoardForm.emit()">
+        Cancel
+      </button>
+      <button hlmBtn type="submit" class="flex-1" [disabled]="isSubmitting()">
+        {{ isSubmitting() ? 'Creating...' : 'Create' }}
+      </button>
+    </div>
+
+  </div>
+</form>
