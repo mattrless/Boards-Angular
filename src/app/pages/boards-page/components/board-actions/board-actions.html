@@ -6,16 +6,31 @@
 
     <hlm-dropdown-menu-group>
       @if (canUpdate()) {
-        <button hlmDropdownMenuItem class="gap-2">
+        <button hlmDropdownMenuItem class="gap-2" (click)="showForm.emit()">
           <ng-icon hlm name="lucidePencil" size="sm" />
           <span>Edit</span>
         </button>
       }
       @if (canDelete()) {
-        <button hlmDropdownMenuItem class="gap-2" variant="destructive">
-          <ng-icon hlm name="lucideTrash" size="sm" />
-          <span>Delete</span>
-        </button>
+        <!-- when created component, alert dialog didn't show -->
+        <hlm-alert-dialog>
+          <button hlmDropdownMenuItem id="edit-profile" hlmAlertDialogTrigger>
+            <ng-icon hlm name="lucideTrash" size="sm" />
+            <span>Delete</span>
+          </button>
+          <hlm-alert-dialog-content *hlmAlertDialogPortal="let ctx">
+            <hlm-alert-dialog-header>
+              <h2 hlmAlertDialogTitle>Delete board?</h2>
+              <p hlmAlertDialogDescription>
+                This action cannot be undone. This will permanently delete this board.
+              </p>
+            </hlm-alert-dialog-header>
+            <hlm-alert-dialog-footer>
+              <button hlmAlertDialogCancel (click)="onCancel(ctx)">Cancel</button>
+              <button hlmAlertDialogAction (click)="onConfirmDelete(ctx)">Delete</button>
+            </hlm-alert-dialog-footer>
+          </hlm-alert-dialog-content>
+        </hlm-alert-dialog>
       }
     </hlm-dropdown-menu-group>
 

@@ -1,8 +1,8 @@
-<section hlmCard class="h-full min-h-40">
+<section hlmCard class="h-full min-h-44">
   @if (isEditingBoard()) {
-    <div hlmCardContent class="flex min-h-40 items-center justify-center py-4">
+    <div hlmCardContent class="flex items-center justify-center">
       <div class="flex w-full max-w-sm flex-col gap-3">
-        <edit-board-form [board]="board()" />
+        <edit-board-form [board]="board()" (closeBoardForm)="closeEditForm()"/>
       </div>
     </div>
   } @else {
@@ -13,8 +13,13 @@
             {{board().name}}
           </h3>
           <div class="flex items-center gap-1">
-            @if (canDeleteBoard() || canUpdateBoard()) {
-              <board-actions [canDelete]="canDeleteBoard()" [canUpdate]="canUpdateBoard()" />
+            @if ((canDeleteBoard() || canUpdateBoard()) && board().id != null) {
+              <board-actions
+                [boardId]="board().id!"
+                [canDelete]="canDeleteBoard()"
+                [canUpdate]="canUpdateBoard()"
+                (showForm)="showEditForm()"
+              />
             }
             <span class="rounded-full bg-primary/10 px-2 py-1 text-xs font-medium text-primary">
               {{board().ownedByCurrentUser ? "Owned" : "Shared"}}
