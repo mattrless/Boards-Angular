@@ -13,4 +13,6 @@ export default class BoardsPage {
   private readonly boardsStateService = inject(BoardsStateService);
 
   readonly boards = this.boardsStateService.boards;
+  readonly ownedBoards = this.boardsStateService.ownedBoards;
+  readonly sharedBoards = this.boardsStateService.sharedBoards;
 }

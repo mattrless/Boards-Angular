@@ -5,12 +5,41 @@
       <button hlmTabsTrigger="owned">Owned</button>
       <button hlmTabsTrigger="shared">Shared</button>
     </hlm-tabs-list>
-  </hlm-tabs>
 
-  <div class="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 xl:grid-cols-3">
-    <create-board-button />
-    @for (b of boards.value(); track b.id) {
-      <board-item [board]="b"/>
-    }
-  </div>
+    <div hlmTabsContent="all" class="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      <create-board-button />
+      @for (b of boards.value(); track b.id) {
+        <board-item [board]="b"/>
+      }
+    </div>
+
+    <div hlmTabsContent="owned" class="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      <create-board-button />
+      @if (ownedBoards().length > 0) {
+        @for (b of ownedBoards(); track b.id) {
+          <board-item [board]="b"/>
+        }
+      } @else {
+        <div hlmCard class="border-dashed py-0">
+          <div hlmCardContent class="flex min-h-44 items-center justify-center py-4">
+              <h1>No owned boards</h1>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div hlmTabsContent="shared" class="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      @if (sharedBoards().length > 0) {
+        @for (b of sharedBoards(); track b.id) {
+          <board-item [board]="b"/>
+        }
+      } @else {
+        <div hlmCard class="border-dashed py-0">
+          <div hlmCardContent class="flex min-h-44 items-center justify-center py-4">
+              <h1>No shared boards</h1>
+          </div>
+        </div>
+      }
+    </div>
+  </hlm-tabs>
 </div>

@@ -10,7 +10,7 @@ export class AuthSessionService {
   private readonly userService = inject(UsersService);
 
   readonly user = signal<MeResponseDto | null>(null);
-  readonly isAuthenticated = computed(() => !!this.user());
+  readonly isAuthenticated = computed<boolean>(() => !!this.user());
 
   loadSession() {
     return this.userService.findMe().pipe(

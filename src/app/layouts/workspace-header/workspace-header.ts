@@ -1,3 +1,5 @@
+import { BoardPermissionsService } from './../../services/board-permissions.service';
+import { BoardsStateService } from './../../services/boards-state.service';
 import { AuthSessionService } from './../../services/auth-session.service';
 import { Component, computed, inject, signal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
@@ -14,6 +16,8 @@ import { HlmBreadcrumbImports } from '@spartan-ng/helm/breadcrumb';
 export default class WorkspaceHeader {
   private readonly authSessionService = inject(AuthSessionService);
   private readonly jwtTokenService = inject(JwtTokenService);
+  private readonly boardsStateService = inject(BoardsStateService);
+  private readonly boardPermissionsService = inject(BoardPermissionsService);
 
   private router = inject(Router);
 
@@ -27,6 +31,8 @@ export default class WorkspaceHeader {
     try {
       this.authSessionService.clearSession();
       this.jwtTokenService.clearToken();
+      this.boardsStateService.clear();
+      this.boardPermissionsService.clear();
       await this.router.navigate(['/']);
     } finally {
       this.isLoggingOut.set(false);
