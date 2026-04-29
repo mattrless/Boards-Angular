@@ -14,9 +14,11 @@ export class AuthSessionService {
 
   loadSession() {
     return this.userService.findMe().pipe(
-      tap((res) => this.user.set(res)),
+      tap((res: MeResponseDto) => {
+        this.user.set(res);
+      }),
       catchError((error) => {
-        this.user.set(null);
+        this.clearSession();
         return throwError(() => error);
       })
     );

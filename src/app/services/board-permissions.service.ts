@@ -34,6 +34,19 @@ export class BoardPermissionsService {
     return (this.permissionsByBoard()[boardId] ?? []).includes(permission);
   }
 
+  invalidate(boardId: number): void {
+    this.permissionsByBoard.update((s) => {
+      const next = { ...s };
+      delete next[boardId];
+      return next;
+    });
+  }
+
+  reload(boardId: number): void {
+    this.invalidate(boardId);
+    this.load(boardId);
+  }
+
   clear(): void {
     this.permissionsByBoard.set({});
     this.loadingByBoard.set({});
