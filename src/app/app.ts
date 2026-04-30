@@ -20,7 +20,7 @@ export class App {
       } else {
         this.boardsWebsocketService.disconnect();
       }
-  });
-}
+    });
+  }
 
 }

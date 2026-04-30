@@ -1,3 +1,4 @@
+import { BoardDetailStateService } from './../../services/board-detail-state.service';
 import { BoardPermissionsService } from './../../services/board-permissions.service';
 import { BoardsStateService } from './../../services/boards-state.service';
 import { AuthSessionService } from './../../services/auth-session.service';
@@ -20,6 +21,7 @@ export default class WorkspaceHeader {
   private readonly jwtTokenService = inject(JwtTokenService);
   private readonly boardsStateService = inject(BoardsStateService);
   private readonly boardPermissionsService = inject(BoardPermissionsService);
+  private readonly boardDetailStateService = inject(BoardDetailStateService);
 
   private readonly activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
@@ -37,6 +39,7 @@ export default class WorkspaceHeader {
       this.jwtTokenService.clearToken();
       this.boardsStateService.clear();
       this.boardPermissionsService.clear();
+      this.boardDetailStateService.clear();
       await this.router.navigate(['/']);
     } finally {
       this.isLoggingOut.set(false);

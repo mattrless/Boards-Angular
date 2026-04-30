@@ -4,6 +4,7 @@ import { guestGuard } from './guards/guest.guard';
 import { roleGuard } from './guards/role.guard';
 import { boardIdGuard } from './guards/board-id.guard';
 import { boardDetailResolver } from './resolvers/board-detail.resolver';
+import { boardPermissionGuard } from './guards/board-permission.guard';
 
 export const routes: Routes = [
   {
@@ -25,7 +26,7 @@ export const routes: Routes = [
       },
       {
         path: 'boards/:boardId',
-        canActivate: [roleGuard, boardIdGuard],
+        canActivate: [roleGuard, boardIdGuard, boardPermissionGuard],
         resolve: { board: boardDetailResolver },
         data: {
           roles: ['admin', 'user'],
