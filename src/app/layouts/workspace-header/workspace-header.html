@@ -12,25 +12,20 @@
           <nav hlmBreadcrumb class="min-w-0">
             <ol hlmBreadcrumbList class="text-lg font-semibold leading-tight tracking-tight text-foreground sm:text-xl md:text-2xl lg:text-3xl flex items-center gap-2">
 
-              <!-- @for (c of crumbs; track $index) {
-                <li>
-                  @if (c.href && !$last) {
-                    <a [routerLink]="c.href" class="text-muted-foreground hover:text-foreground truncate" [title]="c.title">
-                      {{ c.title }}
+              @for (bc of breadcrumbs(); track $index) {
+                <li hlmBreadcrumbItem>
+                  @if (bc.href && !$last) {
+                    <a hlmBreadcrumbLink [link]="bc.href" class="text-muted-foreground hover:text-foreground truncate" [title]="bc.label">
+                      {{ bc.label }}
                     </a>
+                    <li hlmBreadcrumbSeparator></li>
                   } @else {
-                    <span class="font-semibold text-foreground truncate" [title]="c.title">
-                      {{ c.title }}
+                    <span hlmBreadcrumbPage class="font-semibold text-foreground truncate" [title]="bc.label">
+                      {{  board()?.name || bc.label }}
                     </span>
                   }
                 </li>
-                @if (!$last) { <li class="text-muted-foreground/60">/</li> }
-              } -->
-              <li hlmBreadcrumbItem>
-                <span hlmBreadcrumbPage class="font-semibold text-foreground truncate">
-                  Boards
-                </span>
-              </li>
+              }
 
             </ol>
           </nav>

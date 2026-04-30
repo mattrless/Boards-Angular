@@ -2,15 +2,17 @@ import { BoardPermissionsService } from './../../services/board-permissions.serv
 import { BoardsStateService } from './../../services/boards-state.service';
 import { AuthSessionService } from './../../services/auth-session.service';
 import { Component, computed, inject, signal } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { JwtTokenService } from '../../services/jwt-token.service';
 import type { Breadcrumb } from './interfaces/Breadcrumb';
 import { HlmButtonImports } from '@spartan-ng/helm/button';
 import { HlmBreadcrumbImports } from '@spartan-ng/helm/breadcrumb';
+import { BoardResponseDto } from '../../api/generated/model';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'workspace-header',
-  imports: [RouterOutlet, HlmButtonImports, HlmBreadcrumbImports],
+  imports: [RouterOutlet, HlmButtonImports, HlmBreadcrumbImports, RouterLink],
   templateUrl: './workspace-header.html',
 })
 export default class WorkspaceHeader {
@@ -19,9 +21,11 @@ export default class WorkspaceHeader {
   private readonly boardsStateService = inject(BoardsStateService);
   private readonly boardPermissionsService = inject(BoardPermissionsService);
 
+  private readonly activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
 
-  // readonly breadcrumbs = signal<Breadcrumb[]>([]);
+  readonly board = signal<BoardResponseDto | undefined>(undefined);
+  readonly breadcrumbs = signal<Breadcrumb[]>([]);
 
   readonly userName = computed(() => this.authSessionService.user()?.profile?.name);
   readonly isLoggingOut = signal(false);
@@ -39,5 +43,26 @@ export default class WorkspaceHeader {
     }
   }
 
+  ngOnInit(): void {
+    this.syncRouteData();
+    // syncRouteData every NavigationEnd
+    this.router.events
+    .pipe(filter((e) => e instanceof NavigationEnd))
+    .subscribe(() => this.syncRouteData());
+  }
+
+  // setting signals to data from active route
+  private syncRouteData(): void {
+    let current = this.activatedRoute.root;
+    while (current.firstChild) {
+      current = current.firstChild;
+    }
+
+    const breadcrumbs = (current.snapshot.data['breadcrumbs'] as Breadcrumb[] | undefined) ?? [];
+    const board = current.snapshot.data['board'] as BoardResponseDto | undefined;
+
+    this.breadcrumbs.set(breadcrumbs);
+    this.board.set(board);
+  }
 
 }
