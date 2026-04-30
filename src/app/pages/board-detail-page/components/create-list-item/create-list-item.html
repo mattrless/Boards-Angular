@@ -1,0 +1,21 @@
+<div hlmCard
+  class="min-w-72 self-start overflow-hidden p-0"
+>
+  @if (!isShowingForm()) {
+    <button hlmBtn
+      type="button"
+      variant="ghost"
+      class="min-h-22 w-full justify-center gap-2 rounded-none font-bold"
+      (click)="showForm()"
+    >
+      <ng-icon hlm name="lucidePlus" size="sm" />
+      New list
+    </button>
+  } @else {
+    <create-list-form
+      class="min-h-22 p-4 flex h-full w-full items-center justify-center"
+      (closeListForm)="closeForm()"
+    />
+  }
+
+</div>

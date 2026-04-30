@@ -8,10 +8,11 @@ import { UpdateBoardListPositionDto } from '../../api/generated/model';
 import { BoardListsService } from '../../api/generated/board-lists/board-lists.service';
 import { toast } from '@spartan-ng/brain/sonner';
 import { finalize } from 'rxjs';
+import { CreateListItem } from './components/create-list-item/create-list-item';
 
 @Component({
   selector: 'board-detail-page',
-  imports: [ListItem, CdkDropList, CdkDrag],
+  imports: [ListItem, CdkDropList, CdkDrag, CreateListItem],
   templateUrl: './board-detail-page.html',
   styleUrl: './board-detail-page.css'
 })

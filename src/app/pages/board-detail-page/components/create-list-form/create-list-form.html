@@ -1,0 +1,34 @@
+<form
+  [formGroup]="listForm"
+  (ngSubmit)="onSubmit()"
+  class="w-full max-w-sm"
+>
+  <div hlmFieldGroup class="flex flex-row items-start gap-2">
+
+    <div hlmField class="flex-1">
+      <input hlmInput
+        placeholder="My awesome list"
+        autoComplete="title"
+        type="text"
+        formControlName="title"
+        class="w-full"
+      />
+      @if (listForm.controls.title.touched && listForm.controls.title.hasError("required")) {
+        <hlm-field-error>List title is required</hlm-field-error>
+      }
+    </div>
+
+    <div class="flex gap-1">
+      <button hlmBtn type="button" variant="ghost" class="flex-1" (click)="closeListForm.emit()">
+        <ng-icon hlm name="lucideX" size="sm" />
+      </button>
+      <button hlmBtn type="submit" variant="ghost" class="flex-1" [disabled]="isSubmitting()">
+        <ng-icon hlm name="lucideCheck" size="sm" />
+      </button>
+    </div>
+
+  </div>
+  @if (serverError()) {
+    <hlm-field-error>{{ serverError() }}</hlm-field-error>
+  }
+</form>

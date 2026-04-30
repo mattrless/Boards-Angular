@@ -16,8 +16,8 @@
       }
     }
 
-    <!-- {hasBoardPermission(userBoardPermissions, "list_create") ? (
-      <CreateListCard />
-    ) : null} -->
+    @if (canCreateList()) {
+      <create-list-item />
+    }
   </div>
 </div>
