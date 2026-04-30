@@ -1,39 +1,37 @@
 <div hlmCard
-  class="w-72 shrink-0 self-start overflow-hidden gap-0 pt-4 pb-2 max-h-[calc(100dvh-9rem)]"
+  class="w-72 shrink-0 self-start overflow-hidden pt-4 pb-2 max-h-[calc(100dvh-9rem)] gap-2"
 >
-  <div hlmCardHeader class="px-4">
+  @if (isEditing()) {
+    <edit-list-form
+      class="flex h-full w-full items-center justify-center px-4"
+      [list]="list()"
+      (closeListForm)="closeForm()"
+    />
+  } @else {
+    <div hlmCardHeader class="flex flex-row items-center justify-between gap-2">
 
-    <h3 hlmCardTitle class="line-clamp-1 leading-tight font-bold">
-      {{list().title}}
-    </h3>
-        <!-- <CardAction>
-          {hasAllBoardPermissions(userBoardPermissions, [
-            "list_update",
-            "list_delete",
-          ]) ? (
-            <EntityActions
-              entityLabel="List"
-              entityName={list.title}
-              disabled={isMutating}
-              onEdit={handleStartEdit}
-              onDelete={handleDelete}
-            />
-          ) : null}
-        </CardAction> -->
-  </div>
+      <h3 hlmCardTitle class="line-clamp-1 leading-tight font-bold">
+        {{list().title}}
+      </h3>
+
+      @if(canDeleteList() || canUpdateList()) {
+        <list-actions
+          [listId]="list().id!"
+          (showForm)="showEditForm()"
+          [canDeleteList]="canDeleteList()"
+          [canUpdateList]="canUpdateList()"
+        />
+      }
+    </div>
+  }
+
   <div hlmCardContent
     class="scrollbar-hidden px-4 flex min-h-0 flex-col gap-0.5 overflow-y-auto"
   >
-    <!-- <CardItem
-      key={item.id}
-      item={item}
-      index={index}
-      listId={list.id}
-    /> -->
-    <h1>cardItem</h1>
+    <h1>cards here</h1>
   </div>
 
   <div hlmCardFooter class="pt-2 px-4">
-
+    <!-- new card component here -->
   </div>
 </div>

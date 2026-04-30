@@ -5,24 +5,23 @@
   <hlm-dropdown-menu>
 
     <hlm-dropdown-menu-group>
-      @if (canUpdate()) {
+      @if (canUpdateList()) {
         <button hlmDropdownMenuItem class="gap-2" (click)="showForm.emit()">
           <ng-icon hlm name="lucidePencil" size="sm" />
-          <span>Edit</span>
+          <span>Rename</span>
         </button>
       }
-      @if (canDelete()) {
-        <!-- when created component, alert dialog didn't show -->
+      @if (canDeleteList()) {
         <hlm-alert-dialog>
-          <button hlmDropdownMenuItem id="delete-board" hlmAlertDialogTrigger>
+          <button hlmDropdownMenuItem id="edit-profile" hlmAlertDialogTrigger>
             <ng-icon hlm name="lucideTrash" size="sm" />
             <span>Delete</span>
           </button>
           <hlm-alert-dialog-content *hlmAlertDialogPortal="let ctx">
             <hlm-alert-dialog-header>
-              <h2 hlmAlertDialogTitle>Delete board?</h2>
+              <h2 hlmAlertDialogTitle>Delete list?</h2>
               <p hlmAlertDialogDescription>
-                This action cannot be undone. This will permanently delete this board.
+                This action cannot be undone. This will permanently delete this list.
               </p>
             </hlm-alert-dialog-header>
             <hlm-alert-dialog-footer>

@@ -12,6 +12,8 @@
           class="board-list-item"
           cdkDrag
           [list]="list"
+          [canDeleteList]="canDeleteList()"
+          [canUpdateList]="canUpdateList()"
         />
       }
     }

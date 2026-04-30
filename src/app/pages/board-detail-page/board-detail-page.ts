@@ -42,6 +42,10 @@ export default class BoardDetailPage {
     this.boardPermissionsService.has(this.boardId(), 'list_update')
   );
 
+  readonly canDeleteList = computed(() =>
+    this.boardPermissionsService.has(this.boardId(), 'list_delete')
+  );
+
   drop(event: CdkDragDrop<BoardListResponseDto[]>) {
     if (event.previousIndex === event.currentIndex) return;
     if (!this.canUpdateList()) {

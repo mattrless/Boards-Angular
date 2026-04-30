@@ -29,15 +29,9 @@
 
             </ol>
           </nav>
-
-          <div class="flex w-full flex-wrap items-center gap-2 md:w-auto">
-            <ng-content select="[board-actions]"></ng-content>
-          </div>
         </div>
 
         <div class="flex w-full flex-wrap items-center gap-2 sm:w-auto sm:justify-end">
-          <ng-content select="[actions]"></ng-content>
-
           <button hlmBtn variant="outline" (click)="onLogoutClick()" [disabled]="isLoggingOut()" class="w-full sm:w-auto">
             {{ isLoggingOut() ? 'Logging out...' : 'Logout' }}
           </button>
