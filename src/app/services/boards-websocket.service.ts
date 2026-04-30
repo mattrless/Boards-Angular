@@ -8,6 +8,7 @@ import { map, share } from 'rxjs';
 import { boardsRxStompConfig } from './rx-stomp.config';
 import { Message } from '@stomp/stompjs';
 import { environment } from '@env/environment';
+import { BoardDetailStateService } from './board-detail-state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,7 @@ export class BoardsWebsocketService extends RxStomp {
   private readonly jwtTokenService = inject(JwtTokenService);
   private readonly boardPermissionsService = inject(BoardPermissionsService);
   private readonly boardsStateService = inject(BoardsStateService);
+  private readonly boardDetailStateService = inject(BoardDetailStateService);
 
   readonly events = this.watch('/user/queue/boards').pipe(
     map((msg: Message) => JSON.parse(msg.body) as BoardWsEvent),
@@ -28,6 +30,7 @@ export class BoardsWebsocketService extends RxStomp {
 
     this.events.subscribe((boardWsEvent: BoardWsEvent) => {
       switch (boardWsEvent.event) {
+        // board events
         case 'board:updated':
         case 'board:removed':
         case 'board:memberAdded':
@@ -39,6 +42,13 @@ export class BoardsWebsocketService extends RxStomp {
           if (boardWsEvent.boardId) {
             this.boardPermissionsService.reload(boardWsEvent.boardId);
           }
+        break;
+        // list events
+        case 'list:updated':
+        case 'list:created':
+        case 'list:removed':
+        case 'list:moved':
+          this.boardDetailStateService.reloadLists();
         break;
 
         default:
