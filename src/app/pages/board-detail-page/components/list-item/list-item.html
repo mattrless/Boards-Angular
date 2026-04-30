@@ -1,0 +1,39 @@
+<div hlmCard
+  class="w-72 shrink-0 self-start overflow-hidden gap-0 pt-4 pb-2 max-h-[calc(100dvh-9rem)]"
+>
+  <div hlmCardHeader class="px-4">
+
+    <h3 hlmCardTitle class="line-clamp-1 leading-tight">
+      {{list().title}}
+    </h3>
+        <!-- <CardAction>
+          {hasAllBoardPermissions(userBoardPermissions, [
+            "list_update",
+            "list_delete",
+          ]) ? (
+            <EntityActions
+              entityLabel="List"
+              entityName={list.title}
+              disabled={isMutating}
+              onEdit={handleStartEdit}
+              onDelete={handleDelete}
+            />
+          ) : null}
+        </CardAction> -->
+  </div>
+  <div hlmCardContent
+    class="scrollbar-hidden px-4 flex min-h-0 flex-col gap-0.5 overflow-y-auto"
+  >
+    <!-- <CardItem
+      key={item.id}
+      item={item}
+      index={index}
+      listId={list.id}
+    /> -->
+    <h1>cardItem</h1>
+  </div>
+
+  <!-- <CardFooter class="pt-2 px-4">
+    <CreateCardButton boardId={boardId} listId={list.id} />
+  </CardFooter> -->
+</div>

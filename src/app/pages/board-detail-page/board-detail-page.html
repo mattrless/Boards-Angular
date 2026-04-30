@@ -1,1 +1,23 @@
-<p>Board id: {{boardId()}}</p>
+<div class="w-full overflow-x-auto p-2">
+  <div
+    class="board-lists flex w-max items-start gap-4"
+    cdkDropList
+    cdkDropListOrientation="horizontal"
+    (cdkDropListDropped)="drop($event)"
+  >
+
+    @if (lists.hasValue()) {
+      @for (list of lists.value(); track list.id) {
+        <list-item
+          class="board-list-item"
+          cdkDrag
+          [list]="list"
+        />
+      }
+    }
+
+    <!-- {hasBoardPermission(userBoardPermissions, "list_create") ? (
+      <CreateListCard />
+    ) : null} -->
+  </div>
+</div>
