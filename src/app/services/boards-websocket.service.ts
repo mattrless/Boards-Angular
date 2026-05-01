@@ -9,6 +9,7 @@ import { boardsRxStompConfig } from './rx-stomp.config';
 import { Message } from '@stomp/stompjs';
 import { environment } from '@env/environment';
 import { BoardDetailStateService } from './board-detail-state.service';
+import { AuthSessionService } from './auth-session.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,7 @@ export class BoardsWebsocketService extends RxStomp {
   private readonly boardPermissionsService = inject(BoardPermissionsService);
   private readonly boardsStateService = inject(BoardsStateService);
   private readonly boardDetailStateService = inject(BoardDetailStateService);
+  private readonly authSessionService = inject(AuthSessionService);
 
   readonly events = this.watch('/user/queue/boards').pipe(
     map((msg: Message) => JSON.parse(msg.body) as BoardWsEvent),
@@ -50,6 +52,22 @@ export class BoardsWebsocketService extends RxStomp {
         case 'list:moved':
           this.boardDetailStateService.reloadLists();
         break;
+        // card events
+        case 'card:moved': {
+          const sourceListId = boardWsEvent.sourceBoardListId;
+          const targetListId = boardWsEvent.targetBoardList;
+          const actorUserId = boardWsEvent.userId;
+          const currentUserId = this.authSessionService.user()?.id;
+
+          if (sourceListId == null || targetListId == null || actorUserId == null) break;
+          if (currentUserId == null || actorUserId === currentUserId) break;
+
+          this.boardDetailStateService.reloadCardsForList(sourceListId);
+          if (sourceListId !== targetListId) {
+            this.boardDetailStateService.reloadCardsForList(targetListId);
+          }
+          break;
+        }
 
         default:
           if (!environment.production) {

@@ -49,12 +49,21 @@ export default class BoardDetailPage {
     this.boardPermissionsService.has(this.boardId(), 'list_delete')
   );
 
+  readonly canCreateCard = computed(() =>
+    this.boardPermissionsService.has(this.boardId(), 'card_create')
+  );
+
+  readonly canUpdateCard = computed(() =>
+    this.boardPermissionsService.has(this.boardId(), 'card_update')
+  );
+
   dropList(event: CdkDragDrop<BoardListResponseDto[]>) {
-    if (event.previousIndex === event.currentIndex) return;
     if (!this.canUpdateList()) {
       toast.error("Board members can't move lists");
       return;
     }
+
+    if (event.previousIndex === event.currentIndex) return;
 
     const previousLists = [...this.lists.value()!];
     const newLists = [...previousLists];
@@ -95,6 +104,11 @@ export default class BoardDetailPage {
   }
 
   dropCard(event: CdkDragDrop<CardDropData, CardDropData>) {
+    if (!this.canUpdateCard()) {
+      toast.error("Can't move cards");
+      return;
+    }
+
     const boardId = this.boardId();
     if (!boardId) {
       toast.error('Invalid board id');
@@ -147,18 +161,18 @@ export default class BoardDetailPage {
     if (nextCardId != null) data.nextCardId = nextCardId;
 
     this.cardsService.updateCardPosition(boardId, cardId, data)
-      .pipe(
-        finalize(() => {
+      .subscribe({
+        next: () => {
+          toast.success('Card moved');
+        },
+        error: () => {
+          toast.error('Error moving card');
           this.boardDetailStateService.reloadCardsForList(source.listId!);
 
           if (source.listId !== target.listId) {
             this.boardDetailStateService.reloadCardsForList(target.listId!);
           }
-        })
-      )
-      .subscribe({
-        next: () => toast.success('Card moved'),
-        error: () => toast.error('Error moving card'),
+        }
       });
   }
 

@@ -20,6 +20,8 @@ export class ListItem {
   readonly canUpdateList = input.required<boolean>();
   readonly canDeleteList = input.required<boolean>();
 
+  readonly canCreateCard = input.required<boolean>();
+
   readonly cardDropped = output<CdkDragDrop<CardDropData, CardDropData>>();
 
   readonly isEditing = signal<boolean>(false);

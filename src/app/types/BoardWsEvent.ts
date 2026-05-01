@@ -3,4 +3,7 @@ export type BoardWsEvent = {
   boardId?: number;
   boardListId?: number;
   cardId?: number;
+  targetBoardList?: number;
+  sourceBoardListId?: number;
+  userId?: number;
 };

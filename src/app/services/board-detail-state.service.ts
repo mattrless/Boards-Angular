@@ -79,6 +79,13 @@ export class BoardDetailStateService {
     });
   }
 
+  reloadAllCardsForCurrentBoard(): void {
+    const lists = this.lists.value() ?? [];
+    for (const list of lists) {
+      if (list.id) this.reloadCardsForList(list.id);
+    }
+  }
+
   reloadCardsForList(listId: number): void {
     this.cardsByListId.update((s) => {
       const next = { ...s };
