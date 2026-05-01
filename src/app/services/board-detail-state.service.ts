@@ -87,13 +87,27 @@ export class BoardDetailStateService {
   }
 
   reloadCardsForList(listId: number): void {
-    this.cardsByListId.update((s) => {
-      const next = { ...s };
-      delete next[listId];
-      return next;
-    });
+    if (this.cardsLoadingByListId()[listId]) return;
 
-    this.loadCardsForList(listId);
+    const boardId = this.boardId();
+    if (boardId == null) return;
+
+    this.cardsLoadingByListId.update((s) => ({ ...s, [listId]: true }));
+
+    this.cardsService.findAllCards(boardId, listId)
+      .pipe(
+        finalize(() => {
+          this.cardsLoadingByListId.update((s) => ({ ...s, [listId]: false }));
+        })
+      )
+      .subscribe({
+        next: (cards) => {
+          this.cardsByListId.update((s) => ({
+            ...s,
+            [listId]: cards,
+          }));
+        }
+      });
   }
 
   setCardsForList(listId: number, cards: CardResponseDto[]): void {
