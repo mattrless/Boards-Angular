@@ -1,25 +1,32 @@
 <div class="w-full overflow-x-auto p-2">
   <div
-    class="board-lists flex w-max items-start gap-4"
-    cdkDropList
-    cdkDropListOrientation="horizontal"
-    (cdkDropListDropped)="drop($event)"
+    class="flex w-max items-start gap-4"
+    cdkDropListGroup
   >
+    <div
+      class="board-lists flex w-max items-start gap-4"
+      cdkDropList
+      cdkDropListOrientation="horizontal"
+      (cdkDropListDropped)="dropList($event)"
+      [cdkDropListData]="lists.value() ?? []"
+    >
 
-    @if (lists.hasValue()) {
-      @for (list of lists.value(); track list.id) {
-        <list-item
-          class="board-list-item"
-          cdkDrag
-          [list]="list"
-          [canDeleteList]="canDeleteList()"
-          [canUpdateList]="canUpdateList()"
-        />
+      @if (lists.hasValue()) {
+        @for (list of lists.value(); track list.id) {
+          <list-item
+            class="board-list-item"
+            cdkDrag
+            [list]="list"
+            [canDeleteList]="canDeleteList()"
+            [canUpdateList]="canUpdateList()"
+            (cardDropped)="dropCard($event)"
+          />
+        }
       }
-    }
 
-    @if (canCreateList()) {
-      <create-list-item />
-    }
+      @if (canCreateList()) {
+        <create-list-item />
+      }
+    </div>
   </div>
 </div>

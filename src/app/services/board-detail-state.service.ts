@@ -89,6 +89,13 @@ export class BoardDetailStateService {
     this.loadCardsForList(listId);
   }
 
+  setCardsForList(listId: number, cards: CardResponseDto[]): void {
+    this.cardsByListId.update((s) => ({
+      ...s,
+      [listId]: cards,
+    }));
+  }
+
   reloadBoard(): void {
     this.board.reload();
   }
