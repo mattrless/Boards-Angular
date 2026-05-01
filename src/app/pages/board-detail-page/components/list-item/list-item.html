@@ -26,9 +26,11 @@
   }
 
   <div hlmCardContent
-    class="scrollbar-hidden px-4 flex min-h-0 flex-col gap-0.5 overflow-y-auto"
+    class="scrollbar-hidden px-4 flex min-h-0 flex-col gap-1 overflow-y-auto"
   >
-    <h1>cards here</h1>
+    @for (card of cards(); track card.id) {
+      <card-item [card]="card" />
+    }
   </div>
 
   <div hlmCardFooter class="pt-2 px-4">
