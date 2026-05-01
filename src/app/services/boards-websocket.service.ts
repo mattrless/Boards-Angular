@@ -68,6 +68,11 @@ export class BoardsWebsocketService extends RxStomp {
           }
           break;
         }
+        case 'card:created':
+          const targetListId = boardWsEvent.targetBoardList;
+          if (targetListId == null) break;
+          this.boardDetailStateService.reloadCardsForList(targetListId);
+        break;
 
         default:
           if (!environment.production) {

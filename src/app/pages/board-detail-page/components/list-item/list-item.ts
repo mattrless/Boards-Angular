@@ -7,10 +7,11 @@ import { BoardDetailStateService } from '../../../../services/board-detail-state
 import { CardItem } from '../card-item/card-item';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { CardDropData } from '../../types/CardDropData';
+import { CreateCardButton } from '../create-card-button/create-card-button';
 
 @Component({
   selector: 'list-item',
-  imports: [HlmCardImports, ListActions, EditListForm, CardItem, CdkDrag, CdkDropList],
+  imports: [HlmCardImports, ListActions, EditListForm, CardItem, CdkDrag, CdkDropList, CreateCardButton],
   templateUrl: './list-item.html',
   styleUrl: './list-item.css'
 })

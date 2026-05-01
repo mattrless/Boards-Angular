@@ -1,0 +1,13 @@
+<div class="w-full">
+  @if (isShowingForm()) {
+    <create-card-form
+      [listId]="listId()"
+      (closeCardForm)="closeForm()"
+    />
+  } @else {
+    <button hlmBtn variant="ghost" class="w-full justify-start" (click)="showForm()">
+      <ng-icon hlm name="lucidePlus" size="sm" />
+      Add card
+    </button>
+  }
+</div>

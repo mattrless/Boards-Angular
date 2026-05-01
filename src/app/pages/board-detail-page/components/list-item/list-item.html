@@ -42,7 +42,9 @@
     }
   </div>
 
-  <div hlmCardFooter class="pt-2 px-4">
-    <!-- new card component here -->
-  </div>
+  @if (canCreateCard()) {
+    <div hlmCardFooter class="w-full px-4 pb-2">
+      <create-card-button [listId]="list().id!" />
+    </div>
+  }
 </div>
