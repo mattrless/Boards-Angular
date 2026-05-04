@@ -90,7 +90,16 @@ export class BoardsWebsocketService extends RxStomp {
 
           break;
         }
+        case 'card:membersUpdated': {
+          const updatedCardId = boardWsEvent.cardId;
+          if (updatedCardId == null) break;
 
+          const openedCardId = this.cardDetailStateService.cardId();
+          if (openedCardId === updatedCardId) {
+            this.cardDetailStateService.reloadMembers();
+          }
+          break;
+        }
         default:
           if (!environment.production) {
             console.warn('Unhandled board ws event', boardWsEvent);

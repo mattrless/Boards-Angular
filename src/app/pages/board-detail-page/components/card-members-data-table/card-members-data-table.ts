@@ -1,12 +1,10 @@
 import { AuthSessionService } from './../../../../services/auth-session.service';
 import { BoardPermissionsService } from './../../../../services/board-permissions.service';
-import { rxResource } from '@angular/core/rxjs-interop';
 import { CardMembersService } from './../../../../api/generated/card-members/card-members.service';
 import { Component, computed, inject, input, signal } from '@angular/core';
 import { UserResponseDto } from '../../../../api/generated/model';
-import { finalize, of, filter } from 'rxjs';
+import { finalize } from 'rxjs';
 import { BoardDetailStateService } from '../../../../services/board-detail-state.service';
-import { CardMembersParams } from '../../types/CardMemberParams';
 import {
 	type ColumnDef,
 	createAngularTable,
@@ -19,6 +17,7 @@ import { HlmButtonImports } from '@spartan-ng/helm/button';
 import { RemoveCardMemberButton } from '../remove-card-member-button/remove-card-member-button';
 import { toast } from '@spartan-ng/brain/sonner';
 import { JoinLeaveCardButton } from '../join-leave-card-button/join-leave-card-button';
+import { CardDetailStateService } from '../../../../services/card-detail-state.service';
 
 @Component({
   selector: 'card-members-data-table',
@@ -30,6 +29,7 @@ export class CardMembersDataTable {
   private readonly boardDetailStateService = inject(BoardDetailStateService);
   private readonly boardPermissionsService = inject(BoardPermissionsService);
   private readonly authSessionService = inject(AuthSessionService);
+  private readonly cardDetailStateService = inject(CardDetailStateService);
 
   readonly boardId = this.boardDetailStateService.boardId;
   readonly cardId = input.required<number>();
@@ -46,17 +46,7 @@ export class CardMembersDataTable {
     this.boardPermissionsService.hasRole(this.boardId(), 'admin')
   );
 
-  readonly cardMembers = rxResource<UserResponseDto[] | null, CardMembersParams>({
-    params: () => ({
-      cardId: this.cardId(),
-      boardId: this.boardId()
-    }),
-    stream: ({ params }) => {
-      if(params.boardId == null || params.cardId == null) return of(null);
-      return this.cardMembersService.findCardAssignments(params.boardId, params.cardId);
-    },
-    defaultValue: null
-  });
+  readonly cardMembers = this.cardDetailStateService.cardMembers;
 
   readonly totalPages = computed(() =>
     Math.ceil((this.cardMembers.value()?.length ?? 0) / this.pageSize())
