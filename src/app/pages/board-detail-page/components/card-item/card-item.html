@@ -29,13 +29,9 @@
             /> -->
           </div>
         </div>
-        <!-- <div class="mt-4 flex justify-end">
-          <DeleteCardButton
-            cardId={card.id}
-            listId={listId}
-            // onSuccess={() => setIsOpen(false)}
-          />
-        </div> -->
+        <div class="mt-4 flex justify-end">
+          <delete-card-button [cardId]="itemCard().id!" [listId]="listId()"/>
+        </div>
     </hlm-dialog-content>
   </hlm-dialog>
 </div>

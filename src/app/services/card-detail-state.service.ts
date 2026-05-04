@@ -45,4 +45,9 @@ export class CardDetailStateService {
   reloadCard(): void {
     this.card.reload();
   }
+
+  clear(): void {
+    this.listId.set(null);
+    this.cardId.set(null);
+  }
 }

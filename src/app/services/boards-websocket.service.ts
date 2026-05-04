@@ -71,6 +71,7 @@ export class BoardsWebsocketService extends RxStomp {
           break;
         }
         case 'card:created':
+        case 'card:removed':
         case 'card:updated': {
           const targetListId = boardWsEvent.targetBoardList;
           const updatedCardId = boardWsEvent.cardId;
