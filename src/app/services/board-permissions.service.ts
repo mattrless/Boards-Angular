@@ -9,6 +9,8 @@ export class BoardPermissionsService {
   private readonly permissionsByBoard = signal<Record<number, string[]>>({});
   private readonly loadingByBoard = signal<Record<number, boolean>>({});
 
+  private readonly rolesByBoard = signal<Record<number, string>>({});
+
   load(boardId: number): void {
     if (this.loadingByBoard()[boardId]) return;
     if (this.permissionsByBoard()[boardId]) return;
@@ -18,10 +20,14 @@ export class BoardPermissionsService {
     this.boardsService.findMyBoardPermissions(boardId).subscribe({
       next: (res: BoardPermissionsResponseDto) => {
         const permissions = res.permissions ?? [];
+        const role = res.boardRole ?? '';
+
         this.permissionsByBoard.update((s) => ({ ...s, [boardId]: permissions }));
+        this.rolesByBoard.update((s) => ({ ...s, [boardId]: role }));
       },
       error: () => {
         this.permissionsByBoard.update((s) => ({ ...s, [boardId]: [] }));
+        this.rolesByBoard.update((s) => ({ ...s, [boardId]: '' }));
       },
       complete: () => {
         this.loadingByBoard.update((s) => ({ ...s, [boardId]: false }));
@@ -34,8 +40,19 @@ export class BoardPermissionsService {
     return (this.permissionsByBoard()[boardId] ?? []).includes(permission);
   }
 
+  hasRole(boardId: number | null | undefined, role: string): boolean {
+    if (!boardId) return false;
+    return (this.rolesByBoard()[boardId] ?? []).includes(role);
+  }
+
   invalidate(boardId: number): void {
     this.permissionsByBoard.update((s) => {
+      const next = { ...s };
+      delete next[boardId];
+      return next;
+    });
+
+    this.rolesByBoard.update((s) => {
       const next = { ...s };
       delete next[boardId];
       return next;

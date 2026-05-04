@@ -1,0 +1,6 @@
+<button hlmBtn variant="ghost" size="sm"
+  (click)="remove.emit(memberId())"
+  [disabled]="isDeleting()"
+>
+  <ng-icon hlm name="lucideUserRoundMinus" size="sm" />
+</button>

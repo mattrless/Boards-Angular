@@ -5,10 +5,11 @@ import { HlmButtonImports } from '@spartan-ng/helm/button';
 import { HlmDialogImports } from '@spartan-ng/helm/dialog';
 import { CardInformationForm } from '../card-information-form/card-information-form';
 import { DeleteCardButton } from '../delete-card-button/delete-card-button';
+import { CardMembersDataTable } from '../card-members-data-table/card-members-data-table';
 
 @Component({
   selector: 'card-item',
-  imports: [HlmButtonImports, HlmDialogImports, CardInformationForm, DeleteCardButton],
+  imports: [HlmButtonImports, HlmDialogImports, CardInformationForm, DeleteCardButton, CardMembersDataTable],
   templateUrl: './card-item.html',
 })
 export class CardItem {
