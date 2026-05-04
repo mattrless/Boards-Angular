@@ -10,6 +10,7 @@ import { Message } from '@stomp/stompjs';
 import { environment } from '@env/environment';
 import { BoardDetailStateService } from './board-detail-state.service';
 import { AuthSessionService } from './auth-session.service';
+import { CardDetailStateService } from './card-detail-state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +21,7 @@ export class BoardsWebsocketService extends RxStomp {
   private readonly boardsStateService = inject(BoardsStateService);
   private readonly boardDetailStateService = inject(BoardDetailStateService);
   private readonly authSessionService = inject(AuthSessionService);
+  private readonly cardDetailStateService = inject(CardDetailStateService);
 
   readonly events = this.watch('/user/queue/boards').pipe(
     map((msg: Message) => JSON.parse(msg.body) as BoardWsEvent),
@@ -69,10 +71,24 @@ export class BoardsWebsocketService extends RxStomp {
           break;
         }
         case 'card:created':
+        case 'card:updated': {
           const targetListId = boardWsEvent.targetBoardList;
-          if (targetListId == null) break;
-          this.boardDetailStateService.reloadCardsForList(targetListId);
-        break;
+          const updatedCardId = boardWsEvent.cardId;
+
+          if (targetListId != null) {
+            this.boardDetailStateService.reloadCardsForList(targetListId);
+          }
+
+          if (updatedCardId != null) {
+            const openedCardId = this.cardDetailStateService.cardId();
+
+            if (openedCardId === updatedCardId) {
+              this.cardDetailStateService.reloadCard();
+            }
+          }
+
+          break;
+        }
 
         default:
           if (!environment.production) {

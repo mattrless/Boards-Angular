@@ -1,12 +1,28 @@
-import { Component, input } from '@angular/core';
+import { CardDetailStateService } from './../../../../services/card-detail-state.service';
+import { Component, inject, input } from '@angular/core';
 import { CardResponseDto } from '../../../../api/generated/model';
 import { HlmButtonImports } from '@spartan-ng/helm/button';
+import { HlmDialogImports } from '@spartan-ng/helm/dialog';
+import { CardInformationForm } from '../card-information-form/card-information-form';
 
 @Component({
   selector: 'card-item',
-  imports: [HlmButtonImports],
+  imports: [HlmButtonImports, HlmDialogImports, CardInformationForm],
   templateUrl: './card-item.html',
 })
 export class CardItem {
-  readonly card = input.required<CardResponseDto>();
+  private readonly cardDetailStateService = inject(CardDetailStateService);
+
+  readonly itemCard = input.required<CardResponseDto>();
+  readonly listId = input.required<number>();
+
+  openCard(): void {
+    const cardId = this.itemCard().id;
+    const listId = this.listId();
+
+    if (cardId == null) return;
+
+    this.cardDetailStateService.openCard(listId, cardId);
+  }
+
 }

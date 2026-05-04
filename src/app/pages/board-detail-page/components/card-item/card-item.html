@@ -1,10 +1,41 @@
 <div class="w-full min-w-0">
-  <button hlmBtn
-    variant="outline"
-    class="w-full cursor-pointer text-left"
-  >
-    <span class="block w-full truncate">
-      {{ card().title }}
-    </span>
-  </button>
+  <hlm-dialog>
+    <button hlmDialogTrigger hlmBtn
+      variant="outline"
+      class="w-full cursor-pointer text-left"
+      (click)="openCard()"
+    >
+      <span class="block w-full truncate">
+        {{ itemCard().title }}
+      </span>
+    </button>
+
+    <hlm-dialog-content
+      *hlmDialogPortal="let ctx"
+      class="w-[min(96vw,90rem)] max-h-[90vh] overflow-y-auto p-3 sm:p-6"
+    >
+      <div class="grid grid-cols-1 gap-3 lg:grid-cols-2">
+          <div class="min-w-0">
+            <card-information-form [listId]="listId()" />
+          </div>
+          <div class="min-w-0 space-y-2">
+            <h2 class="text-center text-base font-semibold tracking-tight sm:text-lg">
+              Card Members
+            </h2>
+            <!-- <CardMembersDataTable
+              boardId={boardId}
+              cardId={card.id}
+              canRemoveMembers={canRemoveMembers}
+            /> -->
+          </div>
+        </div>
+        <!-- <div class="mt-4 flex justify-end">
+          <DeleteCardButton
+            cardId={card.id}
+            listId={listId}
+            // onSuccess={() => setIsOpen(false)}
+          />
+        </div> -->
+    </hlm-dialog-content>
+  </hlm-dialog>
 </div>

@@ -1,0 +1,49 @@
+<form [formGroup]="cardForm" (ngSubmit)="onSubmit()" class="w-full">
+  <div hlmFieldGroup class="gap-4">
+
+    <div hlmField>
+      <label hlmFieldLabel>Title</label>
+      <input
+        hlmInput
+        type="text"
+        formControlName="title"
+        placeholder="Card title"
+        class="w-full"
+        [readOnly]="!isEditing()"
+        [class.cursor-text]="!isEditing()"
+        (click)="openFormEditor()"
+      />
+      @if (cardForm.controls.title.touched && cardForm.controls.title.hasError('required')) {
+        <hlm-field-error>Title is required</hlm-field-error>
+      }
+    </div>
+
+    <div hlmField>
+      <label hlmFieldLabel>Description</label>
+      <textarea
+        formControlName="description"
+        rows="5"
+        class="border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 w-full resize-y rounded-md border bg-transparent px-3 py-2 text-sm outline-none focus-visible:ring-[3px]"
+        [readOnly]="!isEditing()"
+        [class.cursor-text]="!isEditing()"
+        (click)="openFormEditor()"
+      ></textarea>
+    </div>
+
+    @if (serverError()) {
+      <hlm-field-error>{{ serverError() }}</hlm-field-error>
+    }
+
+    @if (isEditing()) {
+      <div class="flex w-full gap-2">
+        <button hlmBtn type="button" variant="outline" class="flex-1" (click)="closeFormEditor()">
+          Cancel
+        </button>
+        <button hlmBtn type="submit" class="flex-1" [disabled]="isSubmitting()">
+          {{ isSubmitting() ? 'Saving...' : 'Save' }}
+        </button>
+      </div>
+    }
+
+  </div>
+</form>
