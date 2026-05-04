@@ -67,4 +67,12 @@
       </div>
     </div>
   }
+
+  <join-leave-card-button
+    [userIsMember]="userIsMember()"
+    [userId]="userId()!"
+    [cardId]="cardId()"
+    [boardId]="boardId()!"
+    (membersChanged)="cardMembers.reload()"
+  />
 </div>

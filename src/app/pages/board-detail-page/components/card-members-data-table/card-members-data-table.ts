@@ -4,7 +4,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { CardMembersService } from './../../../../api/generated/card-members/card-members.service';
 import { Component, computed, inject, input, signal } from '@angular/core';
 import { UserResponseDto } from '../../../../api/generated/model';
-import { finalize, of } from 'rxjs';
+import { finalize, of, filter } from 'rxjs';
 import { BoardDetailStateService } from '../../../../services/board-detail-state.service';
 import { CardMembersParams } from '../../types/CardMemberParams';
 import {
@@ -18,10 +18,11 @@ import { HlmTableImports } from '@spartan-ng/helm/table';
 import { HlmButtonImports } from '@spartan-ng/helm/button';
 import { RemoveCardMemberButton } from '../remove-card-member-button/remove-card-member-button';
 import { toast } from '@spartan-ng/brain/sonner';
+import { JoinLeaveCardButton } from '../join-leave-card-button/join-leave-card-button';
 
 @Component({
   selector: 'card-members-data-table',
-  imports: [HlmTableImports, FlexRenderDirective, HlmButtonImports],
+  imports: [HlmTableImports, FlexRenderDirective, HlmButtonImports, JoinLeaveCardButton],
   templateUrl: './card-members-data-table.html',
 })
 export class CardMembersDataTable {
@@ -69,6 +70,10 @@ export class CardMembersDataTable {
 
   nextPage() { this.currentPage.update(p => p + 1); }
   prevPage() { this.currentPage.update(p => p - 1); }
+
+  readonly userIsMember = computed(() => {
+    return this.cardMembers.value()?.some((cm) => cm.id === this.userId()) ?? false;
+  });
 
   readonly columns = computed<ColumnDef<UserResponseDto>[]>(() => {
     const isDeleting = this.isDeleting();
