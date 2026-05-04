@@ -24,6 +24,7 @@
     "@spartan-ng/brain": "0.0.1-alpha.676",
     "@stomp/rx-stomp": "^2.3.0",
     "@stomp/stompjs": "^7.3.0",
+    "@tanstack/angular-table": "^8.21.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "rxjs": "~7.8.0",
