@@ -1,0 +1,18 @@
+<div class="group relative inline-flex rounded-md p-px">
+  <div
+    class="absolute inset-0 rounded-md bg-size-[200%_200%] bg-position-[0%_50%] transition-[background-position] duration-700 group-hover:bg-position-[100%_50%]"
+    [class]="gradient()"
+  ></div>
+  <button hlmBtn
+    [hlmTooltip]="tooltipMessage()"
+    type="button"
+    variant="ghost"
+    size="xs"
+    class="relative z-10 rounded-[calc(var(--radius)-4px)] bg-background/80 text-foreground hover:bg-background/90"
+    [disabled]="isUsingAi()"
+    (click)="clicked.emit()"
+  >
+    <ng-icon hlm [name]="icon()" size="sm" />
+    <span>{{ label() }}</span>
+  </button>
+</div>

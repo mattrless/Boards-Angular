@@ -9,26 +9,26 @@
         {{ itemCard().title }}
       </span>
     </button>
+    <hlm-dialog-content *hlmDialogPortal="let ctx">
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:min-h-[34vh]">
 
-    <hlm-dialog-content
-      *hlmDialogPortal="let ctx"
-    >
-      <div class="grid grid-cols-1 gap-3 lg:grid-cols-2">
-          <div class="min-w-0">
-            <card-information-form [listId]="listId()" />
-          </div>
-          <div class="min-w-0 space-y-2">
-            <h2 class="text-center text-base font-semibold tracking-tight sm:text-lg">
+        <div class="flex flex-col h-full">
+          <card-information-form class="flex-1" [listId]="listId()" />
+        </div>
+
+        <div class="flex flex-col justify-between gap-4 h-full">
+          <div class="flex flex-col gap-2">
+            <h2 class="text-base font-semibold tracking-tight sm:text-lg">
               Card Members
             </h2>
-            <card-members-data-table
-              [cardId]="itemCard().id!"
-            />
+            <card-members-data-table [cardId]="itemCard().id!" />
+          </div>
+          <div class="flex justify-start pt-2 border-t">
+            <delete-card-button [cardId]="itemCard().id!" [listId]="listId()" />
           </div>
         </div>
-        <div class="mt-4 flex justify-start">
-          <delete-card-button [cardId]="itemCard().id!" [listId]="listId()"/>
-        </div>
+
+      </div>
     </hlm-dialog-content>
   </hlm-dialog>
 </div>

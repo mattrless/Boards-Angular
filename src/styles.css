@@ -82,3 +82,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+.cdk-dialog-container {
+  width: 40vw !important;
+  max-width: 40vw !important;
+}

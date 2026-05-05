@@ -23,7 +23,7 @@ export class CardItem {
     const listId = this.listId();
 
     if (cardId == null) return;
-
+    // loading card in service
     this.cardDetailStateService.openCard(listId, cardId);
   }
 

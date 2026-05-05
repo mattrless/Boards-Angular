@@ -19,10 +19,33 @@
     </div>
 
     <div hlmField>
-      <label hlmFieldLabel>Description</label>
+      <div class="flex items-center justify-between">
+        <label hlmFieldLabel>Description</label>
+        @if (isEditing()) {
+          <div class="flex gap-2">
+            <ai-button
+              [label]="'Generate'"
+              [icon]="'lucideSparkles'"
+              [gradient]="'bg-[linear-gradient(90deg,#ff6b6b,#f7b733,#6aff8a,#4d9cff,#a855f7,#ff6b6b)]'"
+              [isUsingAi]="isUsingAi()"
+              (clicked)="generateDescription()"
+              [tooltipMessage]="'Generate description from title'"
+            />
+            <ai-button
+              [label]="'Grammar'"
+              [icon]="'lucideSpellCheck'"
+              [gradient]="'bg-[linear-gradient(90deg,#22d3ee,#38bdf8,#60a5fa,#34d399,#22d3ee)]'"
+              [isUsingAi]="isUsingAi()"
+              (clicked)="checkGrammar()"
+              [tooltipMessage]="'Fix description grammar'"
+            />
+          </div>
+        }
+      </div>
+
       <textarea
         formControlName="description"
-        rows="5"
+        rows="8"
         class="border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 w-full resize-y rounded-md border bg-transparent px-3 py-2 text-sm outline-none focus-visible:ring-[3px]"
         [readOnly]="!isEditing()"
         [class.cursor-text]="!isEditing()"

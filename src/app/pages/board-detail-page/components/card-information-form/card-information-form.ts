@@ -1,3 +1,4 @@
+import { AiService } from './../../../../api/generated/ai/ai.service';
 import { BoardDetailStateService } from './../../../../services/board-detail-state.service';
 import { CardsService } from './../../../../api/generated/cards/cards.service';
 import { Component, effect, inject, input, signal } from '@angular/core';
@@ -6,19 +7,21 @@ import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angula
 import { HlmFieldImports } from '@spartan-ng/helm/field';
 import { HlmButtonImports } from '@spartan-ng/helm/button';
 import { HlmInputImports } from '@spartan-ng/helm/input';
-import { UpdateCardDto } from '../../../../api/generated/model';
+import { CheckGrammarDto, DescriptionResponseDto, GenerateDescriptionDto, UpdateCardDto } from '../../../../api/generated/model';
 import { toast } from '@spartan-ng/brain/sonner';
 import { finalize } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AiButton } from '../ai-button/ai-button';
 
 @Component({
   selector: 'card-information-form',
-  imports: [ReactiveFormsModule, HlmFieldImports, HlmButtonImports, HlmInputImports],
+  imports: [ReactiveFormsModule, HlmFieldImports, HlmButtonImports, HlmInputImports, AiButton],
   templateUrl: './card-information-form.html',
 })
 export class CardInformationForm {
   private readonly cardDetailStateService = inject(CardDetailStateService);
   private readonly boardDetailStateService = inject(BoardDetailStateService);
+  private readonly aiService = inject(AiService);
   private readonly cardsService = inject(CardsService);
   private readonly fb = inject(NonNullableFormBuilder);
 
@@ -32,6 +35,7 @@ export class CardInformationForm {
   });
 
   readonly isSubmitting = signal<boolean>(false);
+  readonly isUsingAi = signal<boolean>(false);
   readonly isEditing = signal<boolean>(false);
   readonly serverError = signal<string>('');
 
@@ -51,6 +55,13 @@ export class CardInformationForm {
   }
 
   closeFormEditor(): void {
+    this.isEditing.set(false);
+
+    this.cardForm.patchValue({
+      title: this.card.value()?.title ?? '',
+      description: this.card.value()?.description ?? '',
+    });
+    this.cardForm.markAsUntouched();
     this.isEditing.set(false);
   }
 
@@ -96,5 +107,53 @@ export class CardInformationForm {
         }
       }
     });
+  }
+
+  generateDescription(): void {
+    if(this.isUsingAi()) return;
+
+    this.isUsingAi.set(true);
+
+    const { title } = this.cardForm.getRawValue();
+
+    if (title == null) {
+      toast.error("Need a title to generate description");
+    }
+    const data: GenerateDescriptionDto = {
+      title
+    }
+    this.aiService.generateDescription(data).pipe(finalize(() => this.isUsingAi.set(false)))
+    .subscribe({
+      next: (res: DescriptionResponseDto) => {
+        toast.success("Description generated");
+        this.cardForm.patchValue({description: res.description});
+      }
+    })
+next: (res: DescriptionResponseDto) => {
+        toast.success("Description fixed");
+        this.cardForm.patchValue({description: res.description});
+      }
+  }
+
+  checkGrammar(): void {
+    if(this.isUsingAi()) return;
+
+    this.isUsingAi.set(true);
+
+    const { description } = this.cardForm.getRawValue();
+
+    if (description == null) {
+      toast.error("No description found");
+    }
+    const data: CheckGrammarDto = {
+      description
+    }
+    this.aiService.checkDescriptionGrammar(data).pipe(finalize(() => this.isUsingAi.set(false)))
+    .subscribe({
+      next: (res: DescriptionResponseDto) => {
+        toast.success("Description fixed");
+        this.cardForm.patchValue({description: res.description});
+      }
+    })
   }
 }
