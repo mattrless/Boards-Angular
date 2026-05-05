@@ -10,10 +10,11 @@ import { HlmButtonImports } from '@spartan-ng/helm/button';
 import { HlmBreadcrumbImports } from '@spartan-ng/helm/breadcrumb';
 import { BoardResponseDto } from '../../api/generated/model';
 import { filter } from 'rxjs';
+import { BoardSettings } from '../../pages/board-detail-page/components/board-settings/board-settings';
 
 @Component({
   selector: 'workspace-header',
-  imports: [RouterOutlet, HlmButtonImports, HlmBreadcrumbImports, RouterLink],
+  imports: [RouterOutlet, HlmButtonImports, HlmBreadcrumbImports, RouterLink, BoardSettings],
   templateUrl: './workspace-header.html',
 })
 export default class WorkspaceHeader {
@@ -28,9 +29,16 @@ export default class WorkspaceHeader {
 
   readonly board = signal<BoardResponseDto | undefined>(undefined);
   readonly breadcrumbs = signal<Breadcrumb[]>([]);
+  readonly currentBoard = computed(() => {
+    return this.boardDetailStateService.board.value() ?? this.board();
+  });
 
   readonly userName = computed(() => this.authSessionService.user()?.profile?.name);
   readonly isLoggingOut = signal(false);
+
+  readonly canUpdateBoard = computed(() => {
+    return this.boardPermissionsService.hasRole(this.currentBoard()?.id, 'admin');
+  });
 
   async onLogoutClick() {
     this.isLoggingOut.set(true);

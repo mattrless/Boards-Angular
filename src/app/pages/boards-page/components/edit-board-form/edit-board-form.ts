@@ -16,7 +16,7 @@ import { HlmInputImports } from '@spartan-ng/helm/input';
   templateUrl: './edit-board-form.html',
 })
 export class EditBoardForm {
-  board = input.required<BoardResponseDto>();
+  readonly board = input.required<BoardResponseDto>();
 
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly boardsService = inject(BoardsService);

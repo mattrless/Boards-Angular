@@ -21,7 +21,7 @@
                     <li hlmBreadcrumbSeparator></li>
                   } @else {
                     <span hlmBreadcrumbPage class="font-semibold text-foreground truncate" [title]="bc.label">
-                      {{  board()?.name || bc.label }}
+                      {{ currentBoard()?.name || bc.label }}
                     </span>
                   }
                 </li>
@@ -31,11 +31,15 @@
           </nav>
         </div>
 
-        <div class="flex w-full flex-wrap items-center gap-2 sm:w-auto sm:justify-end">
+        <div class="flex w-full flex-wrap items-center gap-4 sm:w-auto sm:justify-end">
+          @if (currentBoard() && canUpdateBoard()) {
+            <board-settings />
+          }
           <button hlmBtn variant="outline" (click)="onLogoutClick()" [disabled]="isLoggingOut()" class="w-full sm:w-auto">
             {{ isLoggingOut() ? 'Logging out...' : 'Logout' }}
           </button>
         </div>
+
       </div>
     </div>
 

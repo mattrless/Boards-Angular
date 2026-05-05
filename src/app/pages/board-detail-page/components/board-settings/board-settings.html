@@ -1,0 +1,32 @@
+<div class="w-full min-w-0">
+  <hlm-dialog>
+    <button hlmDialogTrigger hlmBtn
+      variant="outline"
+      class="w-full cursor-pointer text-left"
+    >
+      <ng-icon hlm name="lucideSettings" size="sm" />
+      <span class="block w-full">
+        Board settings
+      </span>
+    </button>
+
+    <hlm-dialog-content *hlmDialogPortal="let ctx">
+      <hlm-dialog-header>
+        <h3 hlmDialogTitle>{{board.value()?.name}}</h3>
+      </hlm-dialog-header>
+
+      <hlm-tabs tab="general" class="w-full">
+        <hlm-tabs-list aria-label="settings tabs" class="mx-auto">
+          <button hlmTabsTrigger="general">General</button>
+          <button hlmTabsTrigger="members">Members</button>
+        </hlm-tabs-list>
+
+        <div hlmTabsContent="general">
+          <board-general-settings />
+        </div>
+      </hlm-tabs>
+
+
+    </hlm-dialog-content>
+  </hlm-dialog>
+</div>

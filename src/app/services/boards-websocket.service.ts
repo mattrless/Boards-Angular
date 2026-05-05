@@ -11,6 +11,8 @@ import { environment } from '@env/environment';
 import { BoardDetailStateService } from './board-detail-state.service';
 import { AuthSessionService } from './auth-session.service';
 import { CardDetailStateService } from './card-detail-state.service';
+import { Router } from '@angular/router';
+import { toast } from '@spartan-ng/brain/sonner';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +24,7 @@ export class BoardsWebsocketService extends RxStomp {
   private readonly boardDetailStateService = inject(BoardDetailStateService);
   private readonly authSessionService = inject(AuthSessionService);
   private readonly cardDetailStateService = inject(CardDetailStateService);
+  private readonly router = inject(Router);
 
   readonly events = this.watch('/user/queue/boards').pipe(
     map((msg: Message) => JSON.parse(msg.body) as BoardWsEvent),
@@ -35,8 +38,6 @@ export class BoardsWebsocketService extends RxStomp {
     this.events.subscribe((boardWsEvent: BoardWsEvent) => {
       switch (boardWsEvent.event) {
         // board events
-        case 'board:updated':
-        case 'board:removed':
         case 'board:memberAdded':
         case 'board:memberRemoved':
           this.boardsStateService.reload();
@@ -47,6 +48,33 @@ export class BoardsWebsocketService extends RxStomp {
             this.boardPermissionsService.reload(boardWsEvent.boardId);
           }
         break;
+        case 'board:updated': {
+          this.boardsStateService.reload();
+
+          const updatedBoardId = boardWsEvent.boardId;
+          const currentBoardId = this.boardDetailStateService.boardId();
+
+          if (updatedBoardId != null && currentBoardId === updatedBoardId) {
+            this.boardDetailStateService.reloadBoard();
+          }
+
+          break;
+        }
+        case 'board:removed': {
+          this.boardsStateService.reload();
+
+          const removedBoardId = boardWsEvent.boardId;
+          const currentBoardId = this.boardDetailStateService.boardId();
+
+          if (removedBoardId != null && currentBoardId === removedBoardId) {
+            this.boardDetailStateService.clear();
+            void this.router.navigate(['/boards']);
+            toast.info('This board was removed');
+          }
+
+          break;
+        }
+
         // list events
         case 'list:updated':
         case 'list:created':

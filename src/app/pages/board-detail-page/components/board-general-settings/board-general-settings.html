@@ -1,0 +1,73 @@
+<div class="flex flex-col gap-4">
+  <div hlmCard>
+    <div hlmCardContent>
+      <form [formGroup]="boardForm" (ngSubmit)="onSubmit()" class="w-full">
+        <div hlmFieldGroup class="gap-3">
+
+          <div hlmField class="gap-2">
+            <label hlmFieldLabel>Name</label>
+
+            <div class="flex w-full items-start gap-2">
+              <div class="flex-1">
+                <input
+                  hlmInput
+                  placeholder="My awesome board"
+                  autoComplete="name"
+                  type="text"
+                  formControlName="name"
+                  class="w-full"
+                />
+
+                @if (boardForm.controls.name.touched && boardForm.controls.name.hasError("required")) {
+                  <hlm-field-error>Name is required</hlm-field-error>
+                }
+              </div>
+
+              <button
+                hlmBtn
+                type="submit"
+                [disabled]="isSubmitting()"
+              >
+                {{ isSubmitting() ? 'Updating...' : 'Save' }}
+              </button>
+            </div>
+          </div>
+
+          @if (serverError()) {
+            <hlm-field-error>{{ serverError() }}</hlm-field-error>
+          }
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div hlmCard>
+    <div hlmCardContent>
+
+      <hlm-alert-dialog class="flex justify-center">
+          <button hlmDropdownMenuItem hlmBtn
+            id="delete-board"
+            hlmAlertDialogTrigger
+            [variant]="'destructive'"
+          >
+            <ng-icon hlm name="lucideTrash" size="sm" />
+            <span>Delete board</span>
+          </button>
+          <hlm-alert-dialog-content *hlmAlertDialogPortal="let ctx">
+            <hlm-alert-dialog-header>
+              <h2 hlmAlertDialogTitle>Delete board?</h2>
+              <p hlmAlertDialogDescription>
+                This action cannot be undone. This will permanently delete this board.
+              </p>
+            </hlm-alert-dialog-header>
+            <hlm-alert-dialog-footer>
+              <button hlmAlertDialogCancel (click)="ctx.close()">Cancel</button>
+              <button hlmAlertDialogAction (click)="onDeleteBoard(ctx)">Delete</button>
+            </hlm-alert-dialog-footer>
+          </hlm-alert-dialog-content>
+        </hlm-alert-dialog>
+
+    </div>
+  </div>
+</div>
