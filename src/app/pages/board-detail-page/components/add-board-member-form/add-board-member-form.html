@@ -1,0 +1,43 @@
+@let email = boardMemberForm.controls.email;
+
+<form [formGroup]="boardMemberForm" (ngSubmit)="onSubmit()" class="w-full">
+  <div hlmFieldGroup class="gap-3">
+
+    <div hlmField class="gap-2">
+      <label hlmFieldLabel>Add user to board</label>
+
+      <div class="flex w-full items-start gap-2">
+        <div class="flex-1">
+          <input
+            hlmInput
+            placeholder="My awesome board"
+            autoComplete="email"
+            type="text"
+            formControlName="email"
+            class="w-full"
+          />
+
+          @if (email.touched && email.hasError("required")) {
+            <hlm-field-error>Email is required</hlm-field-error>
+          }
+          @if (email.touched && email.hasError("email")) {
+            <hlm-field-error>Email is invalid</hlm-field-error>
+          }
+        </div>
+
+        <button
+          hlmBtn
+          type="submit"
+          [disabled]="isSubmitting()"
+        >
+          {{ isSubmitting() ? 'Updating...' : 'Add' }}
+        </button>
+      </div>
+    </div>
+
+    @if (serverError()) {
+      <hlm-field-error>{{ serverError() }}</hlm-field-error>
+    }
+
+  </div>
+</form>

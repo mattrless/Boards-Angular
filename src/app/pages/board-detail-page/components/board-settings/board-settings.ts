@@ -7,10 +7,11 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { HlmIcon } from "@spartan-ng/helm/icon";
 import { HlmTabsImports } from '@spartan-ng/helm/tabs';
 import { BoardGeneralSettings } from "../board-general-settings/board-general-settings";
+import { BoardMembersSettings } from "../board-members-settings/board-members-settings";
 
 @Component({
   selector: 'board-settings',
-  imports: [HlmButtonImports, HlmDialogImports, HlmIcon, NgIcon, HlmTabsImports, BoardGeneralSettings],
+  imports: [HlmButtonImports, HlmDialogImports, HlmIcon, NgIcon, HlmTabsImports, BoardGeneralSettings, BoardMembersSettings],
   providers: [provideIcons({ lucideSettings })],
   templateUrl: './board-settings.html',
 })
