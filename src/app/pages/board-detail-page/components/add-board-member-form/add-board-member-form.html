@@ -6,11 +6,11 @@
     <div hlmField class="gap-2">
       <label hlmFieldLabel>Add user to board</label>
 
-      <div class="flex w-full items-start gap-2">
+      <div class="flex flex-col gap-2 sm:flex-row sm:items-start">
         <div class="flex-1">
           <input
             hlmInput
-            placeholder="My awesome board"
+            placeholder="user@mail.com"
             autoComplete="email"
             type="text"
             formControlName="email"
@@ -29,6 +29,7 @@
           hlmBtn
           type="submit"
           [disabled]="isSubmitting()"
+          class="w-full sm:w-auto"
         >
           {{ isSubmitting() ? 'Updating...' : 'Add' }}
         </button>

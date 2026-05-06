@@ -1,0 +1,23 @@
+<div class="flex flex-col gap-1 sm:flex-row sm:justify-end">
+  <button hlmBtn (click)="changeRole()" variant="outline" [disabled]="isSubmitting()">
+    {{`Make ${targetBoardRole()}`}}
+  </button>
+  @if (canRemove()) {
+      <button hlmBtn
+        (click)="makeOwner()"
+        variant="outline"
+        [disabled]="isSubmitting()"
+      >
+      Make owner
+    </button>
+  }
+  @if (canRemove()) {
+    <button hlmBtn
+      variant="destructive"
+      [disabled]="isSubmitting()"
+      (click)="removeMember()"
+    >
+      Remove
+    </button>
+  }
+</div>

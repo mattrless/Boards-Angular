@@ -41,6 +41,15 @@ export class BoardsWebsocketService extends RxStomp {
         case 'board:memberAdded':
         case 'board:memberRemoved':
           this.boardsStateService.reload();
+
+          const removedBoardId = boardWsEvent.boardId;
+          const currentBoardId = this.boardDetailStateService.boardId();
+
+          if (removedBoardId != null && currentBoardId === removedBoardId) {
+            this.boardDetailStateService.clear();
+            void this.router.navigate(['/boards']);
+            toast.info('You were removed from the board');
+          }
         break;
         case 'board:memberRoleUpdated':
           this.boardsStateService.reload();
@@ -70,6 +79,24 @@ export class BoardsWebsocketService extends RxStomp {
             this.boardDetailStateService.clear();
             void this.router.navigate(['/boards']);
             toast.info('This board was removed');
+          }
+
+          break;
+        }
+        case 'board:membersUpdated': {
+          const boardId = boardWsEvent.boardId;
+          const actorUserId = boardWsEvent.userId;
+          const currentUserId = this.authSessionService.user()?.id;
+
+          if (boardId == null || actorUserId == null) break;
+          if (currentUserId != null && actorUserId === currentUserId) break;
+
+          this.boardsStateService.reload();
+          this.boardPermissionsService.reload(boardId);
+
+          if (this.boardDetailStateService.boardId() === boardId) {
+            this.boardDetailStateService.reloadMembers();
+            this.boardDetailStateService.reloadBoard();
           }
 
           break;

@@ -1,8 +1,9 @@
+import { BoardMembersService } from './../api/generated/board-members/board-members.service';
 import { BoardListsService } from './../api/generated/board-lists/board-lists.service';
 import { BoardsService } from './../api/generated/boards/boards.service';
 import { inject, Injectable, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { BoardListResponseDto, BoardResponseDto, CardResponseDto } from '../api/generated/model';
+import { BoardListResponseDto, BoardMemberResponseDto, BoardResponseDto, CardResponseDto } from '../api/generated/model';
 import { finalize, of } from 'rxjs';
 import { CardsService } from '../api/generated/cards/cards.service';
 
@@ -13,6 +14,7 @@ export class BoardDetailStateService {
   private readonly boardsService = inject(BoardsService);
   private readonly boardListsService = inject(BoardListsService);
   private readonly cardsService = inject(CardsService);
+  private readonly boardMembersService = inject(BoardMembersService);
 
   readonly boardId = signal<number | null>(null);
 
@@ -35,6 +37,17 @@ export class BoardDetailStateService {
     },
     defaultValue: null,
   });
+
+  readonly boardMembers = rxResource<BoardMemberResponseDto[] | null, { boardId: number | null }>({
+      params: () => ({
+        boardId: this.boardId(),
+      }),
+      stream: ({ params }) => {
+        if (params.boardId == null) return of(null);
+        return this.boardMembersService.findBoardMembers(params.boardId);
+      },
+      defaultValue: null
+    });
 
   readonly cardsByListId = signal<Record<number, CardResponseDto[]>>({});
   readonly cardsLoadingByListId = signal<Record<number, boolean>>({});
@@ -123,6 +136,10 @@ export class BoardDetailStateService {
 
   reloadLists(): void {
     this.lists.reload();
+  }
+
+  reloadMembers(): void {
+    this.boardMembers.reload();
   }
 
   clear(): void {

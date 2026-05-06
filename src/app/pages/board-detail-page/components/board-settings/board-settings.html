@@ -10,26 +10,30 @@
       </span>
     </button>
 
-    <hlm-dialog-content *hlmDialogPortal="let ctx">
+    <hlm-dialog-content
+      *hlmDialogPortal="let ctx"
+      class="max-h-[90vh] max-w-5xl overflow-y-auto"
+    >
       <hlm-dialog-header>
-        <h3 hlmDialogTitle>{{board.value()?.name}}</h3>
+        <h3 hlmDialogTitle>{{ board.value()?.name }}</h3>
       </hlm-dialog-header>
 
-      <hlm-tabs tab="general" class="w-full">
+      <hlm-tabs tab="general" class="w-full min-w-0">
         <hlm-tabs-list aria-label="settings tabs" class="mx-auto">
           <button hlmTabsTrigger="general">General</button>
           <button hlmTabsTrigger="members">Members</button>
         </hlm-tabs-list>
 
-        <div hlmTabsContent="general">
+        <div hlmTabsContent="general" class="min-w-0">
           <board-general-settings />
         </div>
-        <div hlmTabsContent="members">
-          <board-members-settings />
+
+        <div hlmTabsContent="members" class="min-w-0">
+          <div class="w-full min-w-0 overflow-x-auto">
+            <board-members-settings />
+          </div>
         </div>
       </hlm-tabs>
-
-
     </hlm-dialog-content>
   </hlm-dialog>
 </div>

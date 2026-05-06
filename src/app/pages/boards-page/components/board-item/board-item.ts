@@ -29,7 +29,9 @@ export class BoardItem {
   }
 
   readonly isEditingBoard = signal(false);
-  readonly canUpdateBoard = computed(() => this.boardPermissionsService.has(this.board().id, 'board_update'));
+  readonly canUpdateBoard = computed(() =>
+    this.boardPermissionsService.hasRole(this.board().id, 'admin')
+  );
   readonly canDeleteBoard = computed(() => !!this.board().ownedByCurrentUser);
 
   showEditForm(): void {

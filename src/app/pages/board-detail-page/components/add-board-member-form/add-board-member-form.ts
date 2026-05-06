@@ -60,6 +60,7 @@ export class AddBoardMemberForm {
       next: () => {
         toast.success("Member added");
         this.boardDetailStateService.reloadBoard();
+        this.boardDetailStateService.reloadMembers();
         this.boardMemberForm.patchValue({ email: '' });
         this.boardMemberForm.markAsUntouched();
       },
@@ -68,6 +69,8 @@ export class AddBoardMemberForm {
           this.serverError.set('Invalid data');
         } else if (e.status === 409) {
           this.serverError.set('User already a member of this board');
+        } else if (e.status === 404) {
+          this.serverError.set('User not found');
         } else {
           this.serverError.set('Something went wrong, try again');
         }
