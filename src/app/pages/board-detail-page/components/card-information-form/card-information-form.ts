@@ -55,8 +55,6 @@ export class CardInformationForm {
   }
 
   closeFormEditor(): void {
-    this.isEditing.set(false);
-
     this.cardForm.patchValue({
       title: this.card.value()?.title ?? '',
       description: this.card.value()?.description ?? '',
@@ -97,7 +95,7 @@ export class CardInformationForm {
         toast.success("Card updated");
         this.cardDetailStateService.reloadCard();
         this.boardDetailStateService.reloadCardsForList(this.listId());
-        this.closeFormEditor();
+        this.isEditing.set(false);
       },
       error: (e: HttpErrorResponse) => {
         if (e.status === 400) {
@@ -128,11 +126,7 @@ export class CardInformationForm {
         toast.success("Description generated");
         this.cardForm.patchValue({description: res.description});
       }
-    })
-next: (res: DescriptionResponseDto) => {
-        toast.success("Description fixed");
-        this.cardForm.patchValue({description: res.description});
-      }
+    });
   }
 
   checkGrammar(): void {
