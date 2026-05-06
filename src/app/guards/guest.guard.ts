@@ -1,16 +1,16 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { JwtTokenService } from '../services/jwt-token.service';
+import { AuthSessionService } from '../services/auth-session.service';
 
-export const guestGuard: CanActivateFn = (route, state) => {
-  const token = inject(JwtTokenService).getToken();
+export const guestGuard: CanActivateFn = (route) => {
+  const auth = inject(AuthSessionService);
   const router = inject(Router);
 
-  if (!token) return true;
+  if (!auth.isAuthenticated()) return true;
 
   const returnUrl = route.queryParamMap.get('returnUrl');
 
-  if (returnUrl && returnUrl.startsWith('/')) {
+  if (returnUrl?.startsWith('/')) {
     return router.parseUrl(returnUrl);
   }
 

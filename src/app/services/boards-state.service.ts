@@ -3,7 +3,7 @@ import { computed, inject, Injectable } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { BoardsService } from '../api/generated/boards/boards.service';
 import { BoardResponseDto } from '../api/generated/model';
-import { of } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +17,7 @@ export class BoardsStateService {
     params: () => this.authSessionService.isAuthenticated(),
     stream: ({ params }) => {
       // avoid request when user is not authenticated
-      if (!params) return of([]);
+      if (!params) return EMPTY;
       return this.boardsService.findMyBoards();
     },
     defaultValue: [],

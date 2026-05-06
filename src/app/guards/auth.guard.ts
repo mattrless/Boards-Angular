@@ -1,14 +1,29 @@
 import { inject } from '@angular/core';
-import { JwtTokenService } from './../services/jwt-token.service';
 import { CanActivateFn, Router } from '@angular/router';
+import { AuthSessionService } from '../services/auth-session.service';
+import { JwtTokenService } from '../services/jwt-token.service';
+import { firstValueFrom } from 'rxjs';
 
-export const authGuard: CanActivateFn = (route, state) => {
-  const jwtTokenService = inject(JwtTokenService);
+export const authGuard: CanActivateFn = async (route, state) => {
+  const auth = inject(AuthSessionService);
+  const jwt = inject(JwtTokenService);
   const router = inject(Router);
-  const token = jwtTokenService.getToken();
 
-  if (token) return true;
-  // return to auth forms in case not token found
+  if (auth.isAuthenticated()) return true;
+
+  const token = jwt.getToken();
+
+  if (token) {
+    try {
+      await firstValueFrom(auth.loadSession());
+      return true;
+    } catch {
+      return router.createUrlTree(['/'], {
+        queryParams: { returnUrl: state.url }
+      });
+    }
+  }
+
   return router.createUrlTree(['/'], {
     queryParams: { returnUrl: state.url }
   });
