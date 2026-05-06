@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  boardsApiUrl: "http://mybackend.com",
-  wsUrl: "ws://myWS.com/ws",
+  boardsApiUrl: "https://boards-api-springboot.onrender.com",
+  wsUrl: "wss://boards-api-springboot.onrender.com/ws",
   defaultAvatar: "https://cdn-icons-png.flaticon.com/512/6596/6596121.png",
   demoEmail: "john.daniel@mail.com",
   demoPassword: "7%16O89^4*6t54",
