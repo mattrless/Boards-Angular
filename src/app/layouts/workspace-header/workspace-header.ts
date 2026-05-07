@@ -30,7 +30,10 @@ export default class WorkspaceHeader {
   readonly board = signal<BoardResponseDto | undefined>(undefined);
   readonly breadcrumbs = signal<Breadcrumb[]>([]);
   readonly currentBoard = computed(() => {
-    return this.boardDetailStateService.board.value() ?? this.board();
+    const routeBoard = this.board();
+    if (!routeBoard) return undefined;
+
+    return this.boardDetailStateService.board.value() ?? routeBoard;
   });
 
   readonly userName = computed(() => this.authSessionService.user()?.profile?.name);
@@ -74,6 +77,10 @@ export default class WorkspaceHeader {
 
     this.breadcrumbs.set(breadcrumbs);
     this.board.set(board);
+
+    if (!board) {
+      this.boardDetailStateService.clear();
+    }
   }
 
 }

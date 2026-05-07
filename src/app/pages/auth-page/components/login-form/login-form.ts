@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { finalize, firstValueFrom } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { toast } from '@spartan-ng/brain/sonner';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'login-form',
@@ -77,5 +78,16 @@ export class LoginForm {
     });
 
 
+  }
+
+  loginAsDemoUser() {
+    if (this.isSubmitting()) return;
+
+    this.loginForm.setValue({
+      email: environment.demoEmail,
+      password: environment.demoPassword,
+    });
+
+    this.onSubmit();
   }
 }

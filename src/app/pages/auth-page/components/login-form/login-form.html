@@ -62,13 +62,15 @@
       >
         {{ isSubmitting() ? 'Logging in...' : 'Login' }}
       </button>
-      <!-- <button hlmBtn
+      <button hlmBtn
         type="button"
         class="w-full"
         variant="outline"
+        [disabled]="isSubmitting()"
+        (click)="loginAsDemoUser()"
       >
-        Try Demo
-      </button> -->
+        Login as demo user
+      </button>
     </div>
 
     @if (serverError()) {
