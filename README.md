@@ -1,59 +1,81 @@
-# Boards
+# Boards Frontend Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.8.
+Angular app for the Boards Backend. This is the Angular version of the Boards frontend, built with standalone Angular routes, an Orval-generated API client, authenticated HTTP interceptors, and real-time board updates over STOMP WebSockets.
 
-## Development server
+![demo](./git-assets/demo.gif)
 
-To start a local development server, run:
+## Stack
 
-```bash
-ng serve
-```
+- Angular 21
+- TypeScript 5.9
+- Tailwind CSS 4
+- Spartan UI / HLM components
+- Angular CDK
+- RxJS
+- STOMP WebSocket client (`@stomp/rx-stomp`)
+- Orval (OpenAPI client generation)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Structure
 
-## Code scaffolding
+- `src/app/pages`: Main routed pages for auth, boards, board detail, and forbidden access.
+- `src/app/layouts`: Shared workspace layout and header.
+- `src/app/services`: Auth/session state, board state, permissions, card detail state, and WebSocket synchronization.
+- `src/app/guards`: Route protection for auth, roles, board access, and board id validation.
+- `src/app/resolvers`: Data loading before protected board routes render.
+- `src/app/interceptors`: Base API URL and JWT/authorization handling.
+- `src/app/api/generated`: Orval-generated Angular services and DTO models from the backend OpenAPI spec.
+- `src/app/ui`: Local UI primitives based on Spartan/HLM patterns.
+- `src/environments`: Production and development API/WebSocket configuration.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Commands
 
-```bash
-ng generate component component-name
-```
+- Install: `pnpm install`
+- Dev server: `pnpm start`
+- Build: `pnpm build`
+- Generate API client (Orval): `pnpm api:generate`
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Development
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+`http://localhost:4200/` by default:
 
 ```bash
-ng test
+pnpm start
 ```
 
-## Running end-to-end tests
+Development builds use `src/environments/environment.development.ts`, which points to:
 
-For end-to-end (e2e) testing, run:
+- API: `http://localhost:8080`
+- WebSocket: `ws://localhost:8080/ws`
+
+## Orval
+
+- Config: `orval.config.ts`
+- OpenAPI source: `http://localhost:8080/v3/api-docs`
+- Output services: `src/app/api/generated/*/*.service.ts`
+- Output models: `src/app/api/generated/model`
+- Client: Angular `HttpClient`
+
+Regenerate the client after backend DTO or endpoint changes:
 
 ```bash
-ng e2e
+pnpm api:generate
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## API and auth
 
-## Additional Resources
+Orval generates the Angular services with relative paths, so `baseUrlInterceptor` adds the backend URL from the current environment.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+For logged-in users, `authInterceptor` attaches the JWT.
+
+## Realtime
+
+`BoardsWebsocketService` handles the STOMP connection using the WebSocket URL from the environment.
+
+It listens to `/user/queue/boards` and refreshes the parts of the board that changed, like lists, cards, members, or permissions.
+
+## Routes
+
+- `/`: Auth page for guests.
+- `/boards`: Authenticated boards workspace.
+- `/boards/:boardId`: Authenticated board detail view with board validation, permission checks, and resolver-loaded board data.
+- `/forbidden`: Forbidden access page.
